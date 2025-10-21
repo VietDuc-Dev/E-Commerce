@@ -23,6 +23,12 @@ const appConfig = () => ({
   STRIPE_SECRET_KEY: getEnv("STRIPE_SECRET_KEY"),
   STRIPE_WEBHOOK_SECRET: getEnv("STRIPE_WEBHOOK_SECRET"),
   STRIPE_FRONTEND_KEY: getEnv("STRIPE_FRONTEND_KEY"),
+
+  DB_USER: getEnv("DB_USER"),
+  DB_HOST: getEnv("DB_HOST"),
+  DB_NAME: getEnv("DB_NAME"),
+  DB_PASSWORD: getEnv("DB_PASSWORD"),
+  DB_PORT: getEnv("DB_PORT"),
 });
 
 export const config = appConfig();
