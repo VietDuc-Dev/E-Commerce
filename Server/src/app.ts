@@ -7,6 +7,11 @@ import fileUpload from "express-fileupload";
 import { createTables } from "./common/utils/createTables";
 import { connectDatabase } from "./database/db";
 
+import { errorHandler } from "./middleware/errorHandler";
+import { BadRequestException } from "./common/utils/catchError";
+import { ErrorCode } from "./common/enums/error-code.enum";
+import { asyncHandler } from "./middleware/asyncHandler";
+
 const app = express();
 
 app.use(
@@ -28,7 +33,19 @@ app.use(
   })
 );
 
+app.get(
+  "/",
+  asyncHandler(async (req: Request, res: Response, next: NextFunction) => {
+    throw new BadRequestException(
+      "Bad request",
+      ErrorCode.AUTH_EMAIL_ALREADY_EXISTS
+    );
+  })
+);
+
 connectDatabase();
 createTables();
+
+app.use(errorHandler);
 
 export default app;
