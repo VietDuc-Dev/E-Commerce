@@ -1,0 +1,138 @@
+# =============================
+# 🌍 GLOBAL SETTINGS
+# =============================
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# =============================
+# 📦 NODE / SERVER
+# =============================
+
+# Dependencies
+node_modules/
+server/node_modules/
+
+# Build outputs
+dist/
+build/
+server/dist/
+server/build/
+
+# Cache
+.npm/
+.cache/
+coverage/
+.tmp/
+.eslintcache
+.parcel-cache/
+.next/
+
+# PM2 or other runtime logs
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# =============================
+# ⚛️ REACT / CLIENT
+# =============================
+
+# Dependencies
+client/node_modules/
+
+# Build outputs
+client/build/
+client/dist/
+
+# Local dev cache
+client/.next/
+client/.cache/
+client/.parcel-cache/
+
+# Testing
+client/coverage/
+server/coverage/
+
+# =============================
+# ⚛️ REACT / DASHDOARD
+# =============================
+
+# Dependencies
+dashdoard/node_modules/
+
+# Build outputs
+dashdoard/build/
+dashdoard/dist/
+
+# Local dev cache
+dashdoard/.next/
+dashdoard/.cache/
+dashdoard/.parcel-cache/
+
+# Testing
+dashdoard/coverage/
+server/coverage/
+
+# =============================
+# 🧪 TYPESCRIPT / COMPILATION
+# =============================
+
+*.tsbuildinfo
+*.tgz
+
+# =============================
+# 🧰 MISC
+# =============================
+
+# Local env or secrets
+*.local
+*.secret
+*.key
+*.pem
+
+# Mac / Windows junk
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# =============================
+# 🐳 DOCKER (nếu dùng)
+# =============================
+
+docker-compose.override.yml
+.docker/
+
+# =============================
+# 🧭 GIT
+# =============================
+
+# Ignore merge conflict backups
+*.orig
