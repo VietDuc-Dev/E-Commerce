@@ -4,15 +4,15 @@ import express, { NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import { config } from "./config/app.config";
 import fileUpload from "express-fileupload";
-import { createTables } from "./common/utils/createTables";
-import { connectDatabase } from "./database/db";
 
 import { errorHandler } from "./middleware/errorHandler";
 import { BadRequestException } from "./common/utils/catchError";
 import { ErrorCode } from "./common/enums/error-code.enum";
 import { asyncHandler } from "./middleware/asyncHandler";
+import authRoutes from "./modules/auth/auth.routes";
 
 const app = express();
+const BASE_PATH = config.BASE_PATH;
 
 app.use(
   cors({
@@ -43,8 +43,7 @@ app.get(
   })
 );
 
-connectDatabase();
-createTables();
+app.use(`${BASE_PATH}/auth`, authRoutes);
 
 app.use(errorHandler);
 

@@ -1,4 +1,6 @@
 import app from "./app";
+import { createTables } from "./common/utils/createTables";
+import { connectDatabase } from "./database/db";
 import { config } from "./config/app.config";
 import { v2 as cloudinary } from "cloudinary";
 
@@ -8,6 +10,8 @@ cloudinary.config({
   api_secret: config.CLOUDINARY_CLIENT_SECRET,
 });
 
-app.listen(config.PORT, () => {
-  console.log(`Server is running on port ${config.PORT}`);
+app.listen(config.PORT, async () => {
+  console.log(`Server listening on port ${config.PORT}`);
+  await connectDatabase();
+  await createTables();
 });
