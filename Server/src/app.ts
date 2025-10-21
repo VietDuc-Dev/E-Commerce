@@ -4,6 +4,8 @@ import express, { NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import { config } from "./config/app.config";
 import fileUpload from "express-fileupload";
+import { createTables } from "./common/utils/createTables";
+import { connectDatabase } from "./database/db";
 
 const app = express();
 
@@ -25,5 +27,8 @@ app.use(
     useTempFiles: true,
   })
 );
+
+connectDatabase();
+createTables();
 
 export default app;

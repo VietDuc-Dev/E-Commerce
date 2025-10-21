@@ -9,7 +9,7 @@ const database = new Client({
   port: Number(config.DB_PORT),
 });
 
-export const connectDatabase = async () => {
+export const connectDatabase = async (): Promise<void> => {
   try {
     await database.connect();
     console.log("✅ Connected to the database successfully");
