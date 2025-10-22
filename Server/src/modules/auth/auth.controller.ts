@@ -1,9 +1,8 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { AuthService } from "./auth.service";
-import { registerSchema } from "./auth.validation";
+import { loginSchema, registerSchema } from "./auth.validation";
 import { HTTPSTATUS } from "../../config/http.config";
-import { success } from "zod";
 import { setAuthenticationCookies } from "../../common/utils/cookie";
 
 export class AuthController {
@@ -33,7 +32,20 @@ export class AuthController {
 
   // --------------- LOGIN ---------------
   public login = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {}
+    async (req: Request, res: Response): Promise<any> => {
+      const body = loginSchema.parse(req.body);
+
+      const { user, accessToken } = await this.authService.login(body);
+
+      return setAuthenticationCookies({ res, accessToken })
+        .status(HTTPSTATUS.CREATED)
+        .json({
+          success: true,
+          message: "Đăng nhập tài khoản thành công",
+          user,
+          accessToken,
+        });
+    }
   );
   // --------------- GET USER ---------------
   public getUser = asyncHandler(

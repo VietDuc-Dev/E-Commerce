@@ -2,7 +2,7 @@ import { ErrorCode } from "../../common/enums/error-code.enum";
 import { BadRequestException } from "../../common/utils/catchError";
 import { signJwtToken } from "../../common/utils/jwt";
 import { AuthRepository } from "./auth.repository";
-import { RegisterDto } from "./auth.types";
+import { LoginDto, RegisterDto } from "./auth.types";
 import bcrypt from "bcrypt";
 
 export class AuthService {
@@ -28,7 +28,29 @@ export class AuthService {
   }
 
   // --------------- LOGIN ---------------
-  public async login() {}
+  public async login(data: LoginDto) {
+    const { email, password } = data;
+
+    const user = await AuthRepository.findUserByEmail(email);
+    if (!user)
+      throw new BadRequestException(
+        "Email hoặc mật khẩu không đúng",
+        ErrorCode.AUTH_EMAIL_ALREADY_EXISTS
+      );
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    if (!isPasswordMatch)
+      throw new BadRequestException(
+        "Email hoặc mật khẩu không đúng",
+        ErrorCode.AUTH_EMAIL_ALREADY_EXISTS
+      );
+
+    const accessToken = signJwtToken({
+      userId: user.id,
+    });
+
+    return { user, accessToken };
+  }
 
   // --------------- GET USER ---------------
   public async getUser() {}

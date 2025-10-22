@@ -4,7 +4,7 @@ import { authController } from "./auth.module";
 const authRoutes = Router();
 
 authRoutes.post("/register", authController.register);
-// authRoutes.post("/login", login);
+authRoutes.post("/login", authController.login);
 // authRoutes.get("/me", isAuthenticated, getUser);
 // authRoutes.get("/logout", isAuthenticated, logout);
 // authRoutes.post("/password/forgot", forgotPassword);
