@@ -3,7 +3,10 @@ import { asyncHandler } from "../../middleware/asyncHandler";
 import { AuthService } from "./auth.service";
 import { loginSchema, registerSchema } from "./auth.validation";
 import { HTTPSTATUS } from "../../config/http.config";
-import { setAuthenticationCookies } from "../../common/utils/cookie";
+import {
+  clearAuthenticationCookies,
+  setAuthenticationCookies,
+} from "../../common/utils/cookie";
 
 export class AuthController {
   private authService: AuthService;
@@ -62,7 +65,11 @@ export class AuthController {
 
   // --------------- LOGOUT ---------------
   public logout = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {}
+    async (req: Request, res: Response): Promise<any> => {
+      return clearAuthenticationCookies(res).status(HTTPSTATUS.OK).json({
+        message: "Đăng xuất thành công",
+      });
+    }
   );
 
   // --------------- FORGOT PASSWORD ---------------

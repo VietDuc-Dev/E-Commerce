@@ -7,7 +7,7 @@ const authRoutes = Router();
 authRoutes.post("/register", authController.register);
 authRoutes.post("/login", authController.login);
 authRoutes.get("/me", isAuthenticated, authController.getUser);
-// authRoutes.get("/logout", isAuthenticated, logout);
+authRoutes.get("/logout", isAuthenticated, authController.logout);
 // authRoutes.post("/password/forgot", forgotPassword);
 // authRoutes.put("/password/reset/:token", resetPassword);
 // authRoutes.put("/password/update", isAuthenticated, updatePassword);
