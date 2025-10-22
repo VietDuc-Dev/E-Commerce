@@ -50,7 +50,13 @@ export class AuthController {
   // --------------- GET USER ---------------
   public getUser = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
-      console.log(req.user);
+      const user = await this.authService.getUser(req.user);
+
+      return res.status(HTTPSTATUS.OK).json({
+        success: true,
+        message: "Dữ liệu người dùng",
+        user,
+      });
     }
   );
 

@@ -23,11 +23,11 @@ export const isAuthenticated = asyncHandler(
     );
 
     if (user.rows.length === 0) {
-        throw new UnauthorizedException(
-          "Người dùng không tồn tại.",
-          ErrorCode.AUTH_USER_NOT_FOUND
-        );
-      }
+      throw new UnauthorizedException(
+        "Người dùng không tồn tại.",
+        ErrorCode.AUTH_USER_NOT_FOUND
+      );
+    }
 
     req.user = user.rows[0];
     next();

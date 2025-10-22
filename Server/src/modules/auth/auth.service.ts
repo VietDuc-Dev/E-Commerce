@@ -1,6 +1,7 @@
 import { ErrorCode } from "../../common/enums/error-code.enum";
 import { BadRequestException } from "../../common/utils/catchError";
 import { signJwtToken } from "../../common/utils/jwt";
+import { sanitizeUser } from "../../common/utils/sanitizeUser";
 import { AuthRepository } from "./auth.repository";
 import { LoginDto, RegisterDto } from "./auth.types";
 import bcrypt from "bcrypt";
@@ -53,7 +54,11 @@ export class AuthService {
   }
 
   // --------------- GET USER ---------------
-  public async getUser() {}
+  public async getUser(data: any) {
+    const user = sanitizeUser(data);
+
+    return user;
+  }
 
   // --------------- LOGOUT ---------------
   public async logout() {}
