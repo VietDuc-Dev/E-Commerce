@@ -49,7 +49,9 @@ export class AuthController {
   );
   // --------------- GET USER ---------------
   public getUser = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {}
+    async (req: Request, res: Response): Promise<any> => {
+      console.log(req.user);
+    }
   );
 
   // --------------- LOGOUT ---------------
