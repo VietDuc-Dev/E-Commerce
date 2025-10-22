@@ -1,5 +1,6 @@
 import { ErrorCode } from "../../common/enums/error-code.enum";
 import { BadRequestException } from "../../common/utils/catchError";
+import { signJwtToken } from "../../common/utils/jwt";
 import { AuthRepository } from "./auth.repository";
 import { RegisterDto } from "./auth.types";
 import bcrypt from "bcrypt";
@@ -19,7 +20,11 @@ export class AuthService {
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await AuthRepository.createUser(name, email, hashedPassword);
 
-    return user;
+    const accessToken = signJwtToken({
+      userId: user.id,
+    });
+
+    return { user, accessToken };
   }
 
   // --------------- LOGIN ---------------

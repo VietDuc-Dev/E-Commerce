@@ -4,6 +4,7 @@ import { AuthService } from "./auth.service";
 import { registerSchema } from "./auth.validation";
 import { HTTPSTATUS } from "../../config/http.config";
 import { success } from "zod";
+import { setAuthenticationCookies } from "../../common/utils/cookie";
 
 export class AuthController {
   private authService: AuthService;
@@ -17,13 +18,16 @@ export class AuthController {
     async (req: Request, res: Response): Promise<any> => {
       const body = registerSchema.parse(req.body);
 
-      const user = await this.authService.register(body);
+      const { user, accessToken } = await this.authService.register(body);
 
-      return res.status(HTTPSTATUS.CREATED).json({
-        success: true,
-        message: "Đăng ký tài khoản thành công",
-        user,
-      });
+      return setAuthenticationCookies({ res, accessToken })
+        .status(HTTPSTATUS.CREATED)
+        .json({
+          success: true,
+          message: "Đăng ký tài khoản thành công",
+          user,
+          accessToken,
+        });
     }
   );
 
