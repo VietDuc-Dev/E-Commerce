@@ -40,4 +40,22 @@ export class AuthRepository {
       [email]
     );
   }
+
+  // --------------- CHECK USER WITH RESET PASSWORD TOKEN ---------------
+  static async checkUserWithResetPasswordToken(resetPasswordToken: string) {
+    const result = await database.query(
+      "SELECT * FROM users WHERE reset_password_token = $1 AND reset_password_expire > NOW()",
+      [resetPasswordToken]
+    );
+    return result.rows[0];
+  }
+
+  // --------------- UPDATE USER RESET PASSWORD ---------------
+  static async updateUserResetPassword(hashedPassword: string, user: any) {
+    const result = await database.query(
+      `UPDATE users SET password = $1, reset_password_token = NULL, reset_password_expire = NULL WHERE id = $2 RETURNING *`,
+      [hashedPassword, user.id]
+    );
+    return result.rows[0];
+  }
 }

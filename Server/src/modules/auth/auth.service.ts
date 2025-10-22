@@ -11,6 +11,7 @@ import { sanitizeUser } from "../../common/utils/sanitizeUser";
 import { AuthRepository } from "./auth.repository";
 import { forgotPasswordDto, LoginDto, RegisterDto } from "./auth.types";
 import bcrypt from "bcrypt";
+import crypto from "crypto";
 
 export class AuthService {
   // --------------- REGISTER ---------------
@@ -31,7 +32,7 @@ export class AuthService {
       userId: user.id,
     });
 
-    return { user, accessToken };
+    return { user: sanitizeUser(user), accessToken };
   }
 
   // --------------- LOGIN ---------------
@@ -56,7 +57,7 @@ export class AuthService {
       userId: user.id,
     });
 
-    return { user, accessToken };
+    return { user: sanitizeUser(user), accessToken };
   }
 
   // --------------- GET USER ---------------
@@ -86,7 +87,7 @@ export class AuthService {
     await AuthRepository.updateUserResetPasswordToken(
       hashedToken,
       resetPasswordExpireTime,
-      resetToken
+      email
     );
 
     const resetPasswordUrl = `${frontendUrl}/password/reset/${resetToken}`;
@@ -110,7 +111,35 @@ export class AuthService {
   }
 
   // --------------- RESET PASSWORD ---------------
-  public async resetPassword() {}
+  public async resetPassword(token: string, password: string) {
+    const resetPasswordToken = crypto
+      .createHash("sha256")
+      .update(token)
+      .digest("hex");
+
+    const user = await AuthRepository.checkUserWithResetPasswordToken(
+      resetPasswordToken
+    );
+
+    if (!user)
+      throw new BadRequestException(
+        "Token không có hiệu lực hoặc đã hết hạn",
+        ErrorCode.VERIFICATION_ERROR
+      );
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const updateUser = await AuthRepository.updateUserResetPassword(
+      hashedPassword,
+      user
+    );
+
+    const accessToken = signJwtToken({
+      userId: updateUser.id,
+    });
+
+    return { user: sanitizeUser(updateUser), accessToken };
+  }
 
   // --------------- UPDATE PASSWORD ---------------
   public async updatePassword() {}

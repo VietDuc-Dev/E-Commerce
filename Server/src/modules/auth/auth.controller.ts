@@ -1,7 +1,13 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { AuthService } from "./auth.service";
-import { emailSchema, loginSchema, registerSchema } from "./auth.validation";
+import {
+  changePasswordSchema,
+  emailSchema,
+  loginSchema,
+  passwordSchema,
+  registerSchema,
+} from "./auth.validation";
 import { HTTPSTATUS } from "../../config/http.config";
 import {
   clearAuthenticationCookies,
@@ -90,7 +96,23 @@ export class AuthController {
 
   // --------------- RESET PASSWORD ---------------
   public resetPassword = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {}
+    async (req: Request, res: Response): Promise<any> => {
+      const { password } = changePasswordSchema.parse({ ...req.body });
+      const token = req.params.token;
+
+      const { user, accessToken } = await this.authService.resetPassword(
+        token,
+        password
+      );
+
+      return setAuthenticationCookies({ res, accessToken })
+        .status(HTTPSTATUS.OK)
+        .json({
+          success: true,
+          message: "Thay đổi mật khẩu thành công",
+          user,
+        });
+    }
   );
 
   // --------------- UPDATE PASSWORD ---------------
