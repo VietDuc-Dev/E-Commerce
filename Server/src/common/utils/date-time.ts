@@ -14,6 +14,8 @@ export const tenMinutesAgo = (): Date => new Date(Date.now() - 10 * 60 * 1000);
 
 export const threeMinutesAgo = (): Date => new Date(Date.now() - 3 * 60 * 1000);
 
+export const fifteenFromNow = (): Date => new Date(Date.now() + 15 * 60 * 1000);
+
 export const anHourFromNow = (): Date => new Date(Date.now() + 60 * 60 * 1000);
 
 export const calculateExpirationDate = (expiresIn: string = "15m"): Date => {

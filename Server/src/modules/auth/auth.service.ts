@@ -1,9 +1,15 @@
 import { ErrorCode } from "../../common/enums/error-code.enum";
-import { BadRequestException } from "../../common/utils/catchError";
+import { sendEmail } from "../../common/mailers/sendEmail";
+import { passwordResetTemplate } from "../../common/mailers/templates/template";
+import {
+  BadRequestException,
+  UnauthorizedException,
+} from "../../common/utils/catchError";
+import { generateResetPasswordToken } from "../../common/utils/generateResetPasswordToken";
 import { signJwtToken } from "../../common/utils/jwt";
 import { sanitizeUser } from "../../common/utils/sanitizeUser";
 import { AuthRepository } from "./auth.repository";
-import { LoginDto, RegisterDto } from "./auth.types";
+import { forgotPasswordDto, LoginDto, RegisterDto } from "./auth.types";
 import bcrypt from "bcrypt";
 
 export class AuthService {
@@ -64,7 +70,44 @@ export class AuthService {
   public async logout() {}
 
   // --------------- FORGOT PASSWORD ---------------
-  public async forgotPassword() {}
+  public async forgotPassword(data: forgotPasswordDto) {
+    const { email, frontendUrl } = data;
+
+    const user = await AuthRepository.findUserByEmail(email);
+    if (!user)
+      throw new UnauthorizedException(
+        "Người dùng không tồn tại.",
+        ErrorCode.AUTH_USER_NOT_FOUND
+      );
+
+    const { hashedToken, resetPasswordExpireTime, resetToken } =
+      generateResetPasswordToken();
+
+    await AuthRepository.updateUserResetPasswordToken(
+      hashedToken,
+      resetPasswordExpireTime,
+      resetToken
+    );
+
+    const resetPasswordUrl = `${frontendUrl}/password/reset/${resetToken}`;
+
+    try {
+      await sendEmail({
+        email: user.email,
+        subject: "Thay đổi mật khẩu của bạn",
+        message: passwordResetTemplate(resetPasswordUrl),
+      });
+
+      return;
+    } catch (error) {
+      await AuthRepository.updateUserResetPasswordTokenFaile(email);
+
+      throw new BadRequestException(
+        "Gửi mail thất bại",
+        ErrorCode.INTERNAL_SERVER_ERROR
+      );
+    }
+  }
 
   // --------------- RESET PASSWORD ---------------
   public async resetPassword() {}

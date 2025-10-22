@@ -8,3 +8,8 @@ export interface LoginDto {
   email: string;
   password: string;
 }
+
+export interface forgotPasswordDto {
+  email: string;
+  frontendUrl: string;
+}

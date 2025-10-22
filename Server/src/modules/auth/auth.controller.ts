@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { AuthService } from "./auth.service";
-import { loginSchema, registerSchema } from "./auth.validation";
+import { emailSchema, loginSchema, registerSchema } from "./auth.validation";
 import { HTTPSTATUS } from "../../config/http.config";
 import {
   clearAuthenticationCookies,
@@ -67,6 +67,7 @@ export class AuthController {
   public logout = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
       return clearAuthenticationCookies(res).status(HTTPSTATUS.OK).json({
+        success: true,
         message: "Đăng xuất thành công",
       });
     }
@@ -74,7 +75,17 @@ export class AuthController {
 
   // --------------- FORGOT PASSWORD ---------------
   public forgotPassword = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {}
+    async (req: Request, res: Response): Promise<any> => {
+      const email = emailSchema.parse(req.body.email);
+      const frontendUrl = req.query.frontendUrl as string;
+
+      await this.authService.forgotPassword({ email, frontendUrl });
+
+      return res.status(HTTPSTATUS.OK).json({
+        success: true,
+        message: `Email đã gửi đến ${email} thành công`,
+      });
+    }
   );
 
   // --------------- RESET PASSWORD ---------------
