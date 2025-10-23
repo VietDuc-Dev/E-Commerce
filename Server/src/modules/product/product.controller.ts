@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { ProductService } from "./product.service";
 import { HTTPSTATUS } from "../../config/http.config";
+import { createProductSchema } from "./product.validation";
 
 export class ProductController {
   private productService: ProductService;
@@ -13,9 +14,20 @@ export class ProductController {
   // --------------- CREATE PRODUCT ---------------
   public createProduct = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const body = createProductSchema.parse({
+        ...req.body,
+        images: req.files?.images,
+      });
+
+      const product = await this.productService.createProduct(
+        body,
+        req.user.id
+      );
+
       return res.status(HTTPSTATUS.CREATED).json({
         success: true,
-        message: "",
+        message: "Thêm mới sản phẩm thành công",
+        product,
       });
     }
   );

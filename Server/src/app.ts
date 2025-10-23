@@ -45,7 +45,7 @@ app.get(
 );
 
 app.use(`${BASE_PATH}/auth`, authRoutes);
-app.use(`${BASE_PATH}/auth`, productRoutes);
+app.use(`${BASE_PATH}/product`, productRoutes);
 
 app.use(errorHandler);
 
