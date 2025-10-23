@@ -10,7 +10,11 @@ authRoutes.get("/me", isAuthenticated, authController.getUser);
 authRoutes.get("/logout", isAuthenticated, authController.logout);
 authRoutes.post("/password/forgot", authController.forgotPassword);
 authRoutes.put("/password/reset/:token", authController.resetPassword);
-// authRoutes.put("/password/update", isAuthenticated, updatePassword);
+authRoutes.put(
+  "/password/update",
+  isAuthenticated,
+  authController.updatePassword
+);
 // authRoutes.put("/profile/update", isAuthenticated, updateProfile);
 
 export default authRoutes;

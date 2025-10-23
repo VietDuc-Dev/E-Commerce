@@ -1,4 +1,5 @@
 import { ErrorCode } from "../../common/enums/error-code.enum";
+import { userType } from "../../common/interface/user.interface";
 import { sendEmail } from "../../common/mailers/sendEmail";
 import { passwordResetTemplate } from "../../common/mailers/templates/template";
 import {
@@ -61,7 +62,7 @@ export class AuthService {
   }
 
   // --------------- GET USER ---------------
-  public async getUser(data: any) {
+  public async getUser(data: userType) {
     const user = sanitizeUser(data);
 
     return user;
@@ -142,7 +143,25 @@ export class AuthService {
   }
 
   // --------------- UPDATE PASSWORD ---------------
-  public async updatePassword() {}
+  public async updatePassword(
+    currentPassword: string,
+    newPassword: string,
+    user: userType
+  ) {
+    const isPasswordMatch = await bcrypt.compare(
+      currentPassword,
+      user.password
+    );
+
+    if (!isPasswordMatch)
+      throw new BadRequestException("Mật khẩu hiện tại không đúng");
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    await AuthRepository.updateUserResetPassword(hashedPassword, user);
+
+    return;
+  }
 
   // --------------- UPDATE PROFILE ---------------
   public async updateProfile() {}

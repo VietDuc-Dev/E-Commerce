@@ -5,8 +5,8 @@ import {
   changePasswordSchema,
   emailSchema,
   loginSchema,
-  passwordSchema,
   registerSchema,
+  updatePasswordSchema,
 } from "./auth.validation";
 import { HTTPSTATUS } from "../../config/http.config";
 import {
@@ -117,7 +117,22 @@ export class AuthController {
 
   // --------------- UPDATE PASSWORD ---------------
   public updatePassword = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {}
+    async (req: Request, res: Response): Promise<any> => {
+      const { currentPassword, newPassword } = updatePasswordSchema.parse({
+        ...req.body,
+      });
+
+      await this.authService.updatePassword(
+        currentPassword,
+        newPassword,
+        req.user
+      );
+
+      return res.status(HTTPSTATUS.OK).json({
+        success: true,
+        message: "Thay đổi mật khẩu thành công",
+      });
+    }
   );
 
   // --------------- UPDATE PROFILE ---------------

@@ -17,17 +17,6 @@ export const passwordSchema = z
   .trim()
   .min(6, "Password must be at least 6 characters long");
 
-// --------------- CHANGE PASSWORD ---------------
-export const changePasswordSchema = z
-  .object({
-    password: passwordSchema,
-    confirmPassword: passwordSchema,
-  })
-  .refine((val) => val.password === val.confirmPassword, {
-    message: "Mật khẩu không khớp",
-    path: ["confirmPassword"],
-  });
-
 // --------------- REGISTER ---------------
 export const registerSchema = z.object({
   name: nameSchema,
@@ -44,3 +33,26 @@ export const loginSchema = z.object({
 });
 
 export type LoginDto = z.infer<typeof loginSchema>;
+
+// --------------- CHANGE PASSWORD ---------------
+export const changePasswordSchema = z
+  .object({
+    password: passwordSchema,
+    confirmPassword: passwordSchema,
+  })
+  .refine((val) => val.password === val.confirmPassword, {
+    message: "Mật khẩu không khớp",
+    path: ["confirmPassword"],
+  });
+
+// --------------- UPDATE PASSWORD ---------------
+export const updatePasswordSchema = z
+  .object({
+    currentPassword: passwordSchema,
+    newPassword: passwordSchema,
+    confirmNewPassword: passwordSchema,
+  })
+  .refine((val) => val.newPassword === val.confirmNewPassword, {
+    message: "Mật khẩu không khớp",
+    path: ["confirmPassword"],
+  });
