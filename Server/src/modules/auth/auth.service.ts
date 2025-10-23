@@ -10,9 +10,15 @@ import { generateResetPasswordToken } from "../../common/utils/generateResetPass
 import { signJwtToken } from "../../common/utils/jwt";
 import { sanitizeUser } from "../../common/utils/sanitizeUser";
 import { AuthRepository } from "./auth.repository";
-import { forgotPasswordDto, LoginDto, RegisterDto } from "./auth.types";
+import {
+  forgotPasswordDto,
+  LoginDto,
+  RegisterDto,
+  updateProfileDto,
+} from "./auth.types";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import { v2 as cloudinary } from "cloudinary";
 
 export class AuthService {
   // --------------- REGISTER ---------------
@@ -164,5 +170,40 @@ export class AuthService {
   }
 
   // --------------- UPDATE PROFILE ---------------
-  public async updateProfile() {}
+  public async updateProfile(data: updateProfileDto, userId: string) {
+    const { name, email, avatar } = data;
+
+    let avatarData: { public_id: string; url: string } | null = null;
+    if (avatar) {
+      try {
+        // Xóa avatar cũ nếu có
+        if (avatar.public_id) {
+          await cloudinary.uploader.destroy(avatar.public_id);
+        }
+
+        // Upload ảnh mới
+        const uploaded = await cloudinary.uploader.upload(avatar.tempFilePath, {
+          folder: "Ecommerce_Avatars",
+          width: 150,
+          crop: "scale",
+        });
+
+        avatarData = {
+          public_id: uploaded.public_id,
+          url: uploaded.secure_url,
+        };
+      } catch (error) {
+        throw new Error("Không thể tải ảnh lên Cloudinary.");
+      }
+    }
+
+    const user = await AuthRepository.updateProfile(
+      name,
+      email,
+      avatarData,
+      userId
+    );
+
+    return user;
+  }
 }

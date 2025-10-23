@@ -13,3 +13,9 @@ export interface forgotPasswordDto {
   email: string;
   frontendUrl: string;
 }
+
+export interface updateProfileDto {
+  name: string;
+  email: string;
+  avatar?: any;
+}

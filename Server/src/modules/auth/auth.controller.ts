@@ -7,6 +7,7 @@ import {
   loginSchema,
   registerSchema,
   updatePasswordSchema,
+  updateProfile,
 } from "./auth.validation";
 import { HTTPSTATUS } from "../../config/http.config";
 import {
@@ -137,6 +138,19 @@ export class AuthController {
 
   // --------------- UPDATE PROFILE ---------------
   public updateProfile = asyncHandler(
-    async (req: Request, res: Response): Promise<any> => {}
+    async (req: Request, res: Response): Promise<any> => {
+      const body = updateProfile.parse({
+        ...req.body,
+        avatar: req.files?.avatar,
+      });
+
+      const user = await this.authService.updateProfile(body, req.user.id);
+
+      return res.status(HTTPSTATUS.OK).json({
+        success: true,
+        message: "Cập nhật profile thành công",
+        user,
+      });
+    }
   );
 }

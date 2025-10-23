@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { email, z } from "zod";
 
 const nameSchema = z
   .string({ message: "Username is required" })
@@ -16,6 +16,23 @@ export const passwordSchema = z
   .string({ message: "Password is required" })
   .trim()
   .min(6, "Password must be at least 6 characters long");
+
+const fileSchema = z
+  .object({
+    tempFilePath: z.string(),
+    mimetype: z
+      .string()
+      .refine(
+        (type) => ["image/jpeg", "image/png", "image/webp"].includes(type),
+        "Chỉ chấp nhận file ảnh (.jpg, .png, .webp)"
+      ),
+    size: z
+      .number()
+      .max(5 * 1024 * 1024, "Kích thước file không được vượt quá 5MB"),
+    name: z.string().optional(),
+    data: z.any().optional(),
+  })
+  .optional();
 
 // --------------- REGISTER ---------------
 export const registerSchema = z.object({
@@ -56,3 +73,10 @@ export const updatePasswordSchema = z
     message: "Mật khẩu không khớp",
     path: ["confirmPassword"],
   });
+
+// --------------- UPDATE PASSWORD ---------------
+export const updateProfile = z.object({
+  name: nameSchema,
+  email: emailSchema,
+  avatar: fileSchema,
+});

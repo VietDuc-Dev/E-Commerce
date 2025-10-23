@@ -58,4 +58,37 @@ export class AuthRepository {
     );
     return result.rows[0];
   }
+
+  // --------------- UPDATE USER RESET PASSWORD ---------------
+  static async updateProfile(
+    name: string,
+    email: string,
+    avatarData: {
+      public_id: string;
+      url: string;
+    } | null,
+    userId: string
+  ) {
+    const query = avatarData
+      ? `UPDATE users 
+           SET name = $1, email = $2, avatar = $3 
+           WHERE id = $4 
+           RETURNING id, name, email, role, avatar, created_at`
+      : `UPDATE users 
+           SET name = $1, email = $2 
+           WHERE id = $3 
+           RETURNING id, name, email, role, avatar, created_at`;
+
+    const values = avatarData
+      ? [name, email, avatarData, userId]
+      : [name, email, userId];
+
+    const result = await database.query(query, values);
+
+    if (result.rows.length === 0) {
+      throw new Error("Cập nhật thất bại");
+    }
+
+    return result.rows[0];
+  }
 }

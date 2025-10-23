@@ -15,6 +15,10 @@ authRoutes.put(
   isAuthenticated,
   authController.updatePassword
 );
-// authRoutes.put("/profile/update", isAuthenticated, updateProfile);
+authRoutes.put(
+  "/profile/update",
+  isAuthenticated,
+  authController.updateProfile
+);
 
 export default authRoutes;
