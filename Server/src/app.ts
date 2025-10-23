@@ -10,6 +10,7 @@ import { BadRequestException } from "./common/utils/catchError";
 import { ErrorCode } from "./common/enums/error-code.enum";
 import { asyncHandler } from "./middleware/asyncHandler";
 import authRoutes from "./modules/auth/auth.routes";
+import productRoutes from "./modules/product/product.routes";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -44,6 +45,7 @@ app.get(
 );
 
 app.use(`${BASE_PATH}/auth`, authRoutes);
+app.use(`${BASE_PATH}/auth`, productRoutes);
 
 app.use(errorHandler);
 
