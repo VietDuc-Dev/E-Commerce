@@ -205,4 +205,13 @@ export class ProductRepository {
     );
     return result.rows[0];
   }
+
+  // --------------- DELETE REVIEW ---------------
+  static async deleteReview(productId: string, userId: string) {
+    const result = await database.query(
+      `DELETE FROM reviews WHERE product_id = $1 AND user_id = $2 RETURNING *`,
+      [productId, userId]
+    );
+    return result.rows[0] || null;
+  }
 }

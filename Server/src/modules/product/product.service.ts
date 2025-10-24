@@ -192,7 +192,22 @@ export class ProductService {
   }
 
   // --------------- DELETE REVIEW ---------------
-  public async deleteReview() {}
+  public async deleteReview(userId: string, productId: string) {
+    const deletedReview = await ProductRepository.deleteReview(
+      productId,
+      userId
+    );
+
+    if (!deletedReview) {
+      throw new BadRequestException("Không tìm thấy bài đánh giá");
+    }
+
+    const updatedProduct = await ProductRepository.updateProductRating(
+      productId
+    );
+
+    return { deletedReview, updatedProduct };
+  }
 
   // --------------- FETCH AI FILTERED PRODUCTS ---------------
   public async fetchAiFilteredProducts() {}

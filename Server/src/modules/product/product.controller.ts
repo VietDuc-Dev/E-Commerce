@@ -114,7 +114,7 @@ export class ProductController {
 
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Đánh giá đã đăng",
         review,
         product,
       });
@@ -124,9 +124,16 @@ export class ProductController {
   // --------------- DELETE REVIEW ---------------
   public deleteReview = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const productId = productIdSchema.parse(req.params.productId);
+
+      const { deletedReview, updatedProduct } =
+        await this.productService.deleteReview(productId, req.user.id);
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Bài đánh giá của bạn đã được xóa",
+        review: deletedReview,
+        product: updatedProduct,
       });
     }
   );
