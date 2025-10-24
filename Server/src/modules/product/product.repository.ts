@@ -112,9 +112,37 @@ export class ProductRepository {
     return result.rows[0];
   }
 
+  // --------------- UPDATE PRODUCT BY ID ---------------
   static async deleteProductById(productId: string) {
     const result = await database.query(
       "DELETE FROM products WHERE id = $1 RETURNING *",
+      [productId]
+    );
+    return result.rows[0];
+  }
+
+  // --------------- UPDATE PRODUCT BY ID ---------------
+  static async fetchSingleProduct(productId: string) {
+    const result = await database.query(
+      `
+        SELECT p.*,
+        COALESCE(
+        json_agg(
+        json_build_object(
+            'review_id', r.id,
+            'rating', r.rating,
+            'comment', r.comment,
+            'reviewer', json_build_object(
+            'id', u.id,
+            'name', u.name,
+            'avatar', u.avatar
+            )) 
+        ) FILTER (WHERE r.id IS NOT NULL), '[]') AS reviews
+         FROM products p
+         LEFT JOIN reviews r ON p.id = r.product_id
+         LEFT JOIN users u ON r.user_id = u.id
+         WHERE p.id  = $1
+         GROUP BY p.id`,
       [productId]
     );
     return result.rows[0];

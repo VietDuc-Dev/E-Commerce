@@ -151,7 +151,12 @@ export class ProductService {
   }
 
   // --------------- FETCH SINGLE PRODUCT ---------------
-  public async fetchSingleProduct() {}
+  public async fetchSingleProduct(productId: string) {
+    const product = await ProductRepository.fetchSingleProduct(productId);
+    if (!product) throw new BadRequestException("Không tìm thấy sản phẩm");
+
+    return product;
+  }
 
   // --------------- POST PRODUCT REVIEW ---------------
   public async postProductReview() {}

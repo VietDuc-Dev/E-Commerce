@@ -87,9 +87,14 @@ export class ProductController {
   // --------------- FETCH SINGLE PRODUCT ---------------
   public fetchSingleProduct = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const productId = productIdSchema.parse(req.params.productId);
+
+      const product = await this.productService.fetchSingleProduct(productId);
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Lấy sản phẩm thành công",
+        product,
       });
     }
   );
