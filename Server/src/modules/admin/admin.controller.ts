@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { AdminService } from "./admin.service";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { HTTPSTATUS } from "../../config/http.config";
+import { pageSchema } from "./admin.validation";
 
 export class AdminController {
   private adminService: AdminService;
@@ -13,9 +14,14 @@ export class AdminController {
   // --------------- GET ALL USER ---------------
   public getAllUsers = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const page = pageSchema.parse(req.query.page);
+
+      const result = await this.adminService.getAllUsers(page);
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Tất cả người dùng",
+        ...result,
       });
     }
   );

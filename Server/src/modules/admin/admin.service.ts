@@ -1,6 +1,18 @@
+import { AdminRepository } from "./admin.repository";
+
 export class AdminService {
-  // --------------- GET ALL USER ---------------
-  public async createProduct() {}
+  // --------------- GET ALL USERS ---------------
+  public async getAllUsers(page: number) {
+    const totalUsers = await AdminRepository.countAllUsers();
+
+    const users = await AdminRepository.fetchUsers(page);
+
+    return {
+      totalUsers,
+      currentPage: page,
+      users,
+    };
+  }
 
   // --------------- DELETE USER ---------------
   public async deleteUser() {}
