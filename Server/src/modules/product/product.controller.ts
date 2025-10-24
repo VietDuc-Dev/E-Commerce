@@ -9,6 +9,7 @@ import {
   postProductReviewSchema,
   productIdSchema,
   updateProductSchema,
+  userPromptSchema,
 } from "./product.validation";
 
 export class ProductController {
@@ -141,10 +142,15 @@ export class ProductController {
   // --------------- FETCH AI FILTERED PRODUCTS ---------------
   public fetchAiFilteredProducts = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
-      return res.status(HTTPSTATUS.OK).json({
-        success: true,
-        message: "",
-      });
+      const userPrompt = userPromptSchema.parse(req.body.userPrompt);
+
+      const result = await this.productService.fetchAiFilteredProducts(
+        userPrompt,
+        req,
+        res
+      );
+
+      return res.status(HTTPSTATUS.OK).json(result);
     }
   );
 }

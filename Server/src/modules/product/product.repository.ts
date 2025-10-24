@@ -214,4 +214,17 @@ export class ProductRepository {
     );
     return result.rows[0] || null;
   }
+
+  // --------------- SEARCH BY KEY WORDS ---------------
+  static async searchByKeywords(keywords: string[]) {
+    const query = `
+      SELECT * FROM products
+      WHERE name ILIKE ANY($1)
+      OR description ILIKE ANY($1)
+      OR category ILIKE ANY($1)
+      LIMIT 200;
+    `;
+    const result = await database.query(query, [keywords]);
+    return result.rows;
+  }
 }

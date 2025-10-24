@@ -60,6 +60,8 @@ export const postProductReviewSchema = z.object({
   comment: z.string({ message: "vui lòng thêm nhận xét" }).min(1),
 });
 
+export const userPromptSchema = z.string().min(1, '"Phải có ít nhất 1 ký tự"');
+
 // --------------- CREATE PRODUCT ---------------
 export const createProductSchema = z.object({
   name: nameSchema,

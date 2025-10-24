@@ -1,5 +1,7 @@
+import { Request, Response } from "express";
 import { AvailabilityEnum } from "../../common/enums/product.enum";
 import { BadRequestException } from "../../common/utils/catchError";
+import { filterKeywords } from "../../common/utils/filterKeywords";
 import { ProductRepository } from "./product.repository";
 import {
   CreateProductDto,
@@ -8,6 +10,7 @@ import {
   UpdateProductDto,
 } from "./product.types";
 import { v2 as cloudinary } from "cloudinary";
+import { getAIRecommendation } from "../../common/utils/getAiRecommendation";
 
 export class ProductService {
   // --------------- CREATE PRODUCT ---------------
@@ -210,5 +213,28 @@ export class ProductService {
   }
 
   // --------------- FETCH AI FILTERED PRODUCTS ---------------
-  public async fetchAiFilteredProducts() {}
+  public async fetchAiFilteredProducts(
+    userPrompt: string,
+    req: Request,
+    res: Response
+  ) {
+    const keywords = filterKeywords(userPrompt);
+
+    const filteredProducts = await ProductRepository.searchByKeywords(keywords);
+    if (filteredProducts.length === 0) {
+      return {
+        success: true,
+        message: "Không có sản phẩm nào được tìm thấy",
+        products: [],
+      };
+    }
+
+    const { success, products } = await getAIRecommendation(
+      req,
+      res,
+      userPrompt,
+      filteredProducts
+    );
+    return { success, message: "Sản phẩm lọc từ AI.", products };
+  }
 }
