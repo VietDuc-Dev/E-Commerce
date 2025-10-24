@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { ProductService } from "./product.service";
 import { HTTPSTATUS } from "../../config/http.config";
-import { createProductSchema } from "./product.validation";
+import {
+  createProductSchema,
+  fetchAllProductsSchema,
+  pageSchema,
+} from "./product.validation";
 
 export class ProductController {
   private productService: ProductService;
@@ -35,9 +39,15 @@ export class ProductController {
   // --------------- FETCH ALL PRODUCTS ---------------
   public fetchAllProducts = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const body = fetchAllProductsSchema.parse(req.query);
+      const page = pageSchema.parse(req.query.page) || 1;
+
+      const product = await this.productService.fetchAllProducts(body, page);
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Lấy danh sách sản phẩm thành công",
+        ...product,
       });
     }
   );

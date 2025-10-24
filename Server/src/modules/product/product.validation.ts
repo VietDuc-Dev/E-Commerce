@@ -1,4 +1,7 @@
-import z from "zod";
+import z, { string } from "zod";
+import { AvailabilityEnum } from "../../common/enums/product.enum";
+
+export const pageSchema = z.number().optional();
 
 // Schema cho một ảnh
 const singleFileSchema = z.object({
@@ -19,6 +22,14 @@ const singleFileSchema = z.object({
 const filesSchema = z
   .array(singleFileSchema)
   .nonempty({ message: "Phải có ít nhất 1 ảnh sản phẩm" });
+
+export const fetchAllProductsSchema = z.object({
+  availability: z.enum(Object.values(AvailabilityEnum)).optional(),
+  price: z.number().optional(),
+  category: z.string().optional(),
+  ratings: z.number().optional(),
+  search: z.string().optional(),
+});
 
 // --------------- CREATE PRODUCT ---------------
 export const createProductSchema = z.object({

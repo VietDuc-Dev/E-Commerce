@@ -1,5 +1,6 @@
+import { AvailabilityEnum } from "../../common/enums/product.enum";
 import { ProductRepository } from "./product.repository";
-import { CreateProductDto } from "./product.types";
+import { CreateProductDto, FetchAllProductsDto } from "./product.types";
 import { v2 as cloudinary } from "cloudinary";
 
 export class ProductService {
@@ -35,7 +36,82 @@ export class ProductService {
   }
 
   // --------------- FETCH ALL PRODUCTS ---------------
-  public async fetchAllProducts() {}
+  public async fetchAllProducts(data: FetchAllProductsDto, page: number) {
+    const { availability, price, category, ratings, search } = data;
+
+    const limit = 10;
+    const offset = (page - 1) * limit;
+
+    const conditions: string[] = [];
+    const values: (string | number)[] = [];
+    let index = 1;
+
+    // Availability
+    if (availability === AvailabilityEnum.IN_STOCK) {
+      conditions.push(`p.stock > 5`);
+    } else if (availability === AvailabilityEnum.LIMITED) {
+      conditions.push(`p.stock > 0 AND p.stock <= 5`);
+    } else if (availability === AvailabilityEnum.OUT_OF_STOCK) {
+      conditions.push(`p.stock = 0`);
+    }
+
+    // Price
+    if (price) {
+      const [minPrice, maxPrice] = price.toString().split("-").map(Number);
+      if (!isNaN(minPrice) && !isNaN(maxPrice)) {
+        conditions.push(`p.price BETWEEN $${index} AND $${index + 1}`);
+        values.push(minPrice, maxPrice);
+        index += 2;
+      }
+    }
+
+    // Category
+    if (category) {
+      conditions.push(`p.category ILIKE $${index}`);
+      values.push(`%${category}%`);
+      index++;
+    }
+
+    // Ratings
+    if (ratings) {
+      conditions.push(`p.ratings >= $${index}`);
+      values.push(ratings);
+      index++;
+    }
+
+    // Search
+    if (search) {
+      conditions.push(
+        `(p.name ILIKE $${index} OR p.description ILIKE $${index})`
+      );
+      values.push(`%${search}%`);
+      index++;
+    }
+
+    const { totalProducts, products } =
+      await ProductRepository.fetchFilteredProducts(
+        conditions,
+        values,
+        limit,
+        offset
+      );
+
+    const newProducts = await ProductRepository.fetchNewProducts();
+    const topRated = await ProductRepository.fetchTopRatedProducts();
+
+    return {
+      products,
+      pagination: {
+        total: totalProducts,
+        page,
+        limit,
+        totalPages: Math.ceil(totalProducts / limit),
+      },
+      filters: { availability, price, category, ratings, search },
+      newProducts,
+      topRated,
+    };
+  }
 
   // --------------- UPDATE PRODUCT ---------------
   public async updateProduct() {}

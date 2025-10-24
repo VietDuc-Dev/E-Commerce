@@ -1,3 +1,5 @@
+import { AvailabilityEnumType } from "../../common/enums/product.enum";
+
 interface UploadedFileType {
   tempFilePath: string;
   mimetype: string;
@@ -13,4 +15,12 @@ export interface CreateProductDto {
   category: string;
   stock: number;
   images: any;
+}
+
+export interface FetchAllProductsDto {
+  availability?: AvailabilityEnumType;
+  price?: number;
+  category?: string;
+  ratings?: number;
+  search?: string;
 }
