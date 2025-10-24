@@ -24,3 +24,11 @@ export interface FetchAllProductsDto {
   ratings?: number;
   search?: string;
 }
+
+export interface UpdateProductDto {
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  stock: number;
+}

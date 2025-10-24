@@ -1,5 +1,5 @@
 import database from "../../database/db";
-import { CreateProductDto } from "./product.types";
+import { CreateProductDto, UpdateProductDto } from "./product.types";
 
 export class ProductRepository {
   // --------------- CREATE PRODUCT ---------------
@@ -85,5 +85,30 @@ export class ProductRepository {
     `;
     const result = await database.query(query);
     return result.rows;
+  }
+
+  // --------------- FIND PRODUCT BY ID ---------------
+  static async findProductById(productId: string) {
+    const result = await database.query(
+      "SELECT * FROM products WHERE id = $1",
+      [productId]
+    );
+    return result.rows[0];
+  }
+
+  // --------------- UPDATE PRODUCT BY ID ---------------
+  static async updateProductById(data: UpdateProductDto, productId: string) {
+    const result = await database.query(
+      `UPDATE products SET name = $1, description = $2, price = $3, category = $4, stock = $5 WHERE id = $6 RETURNING *`,
+      [
+        data.name,
+        data.description,
+        data.price,
+        data.category,
+        data.stock,
+        productId,
+      ]
+    );
+    return result.rows[0];
   }
 }

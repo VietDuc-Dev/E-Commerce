@@ -6,6 +6,8 @@ import {
   createProductSchema,
   fetchAllProductsSchema,
   pageSchema,
+  productIdSchema,
+  updateProductSchema,
 } from "./product.validation";
 
 export class ProductController {
@@ -55,9 +57,15 @@ export class ProductController {
   // --------------- UPDATE PRODUCT ---------------
   public updateProduct = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const body = updateProductSchema.parse(req.body);
+      const productId = productIdSchema.parse(req.params);
+
+      const product = await this.productService.updateProduct(body, productId);
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Cập nhật sản phẩm thành công",
+        product,
       });
     }
   );

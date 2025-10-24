@@ -1,6 +1,11 @@
 import { AvailabilityEnum } from "../../common/enums/product.enum";
+import { BadRequestException } from "../../common/utils/catchError";
 import { ProductRepository } from "./product.repository";
-import { CreateProductDto, FetchAllProductsDto } from "./product.types";
+import {
+  CreateProductDto,
+  FetchAllProductsDto,
+  UpdateProductDto,
+} from "./product.types";
 import { v2 as cloudinary } from "cloudinary";
 
 export class ProductService {
@@ -114,7 +119,14 @@ export class ProductService {
   }
 
   // --------------- UPDATE PRODUCT ---------------
-  public async updateProduct() {}
+  public async updateProduct(data: UpdateProductDto, productId: string) {
+    const existing = await ProductRepository.findProductById(productId);
+    if (existing) throw new BadRequestException("Không tìm thấy sản phẩm");
+
+    const product = await ProductRepository.updateProductById(data, productId);
+
+    return product;
+  }
 
   // --------------- DELETE PRODUCT ---------------
   public async deleteProduct() {}
