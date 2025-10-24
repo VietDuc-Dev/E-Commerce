@@ -121,7 +121,7 @@ export class ProductService {
   // --------------- UPDATE PRODUCT ---------------
   public async updateProduct(data: UpdateProductDto, productId: string) {
     const existing = await ProductRepository.findProductById(productId);
-    if (existing) throw new BadRequestException("Không tìm thấy sản phẩm");
+    if (!existing) throw new BadRequestException("Không tìm thấy sản phẩm");
 
     const product = await ProductRepository.updateProductById(data, productId);
 
@@ -129,7 +129,26 @@ export class ProductService {
   }
 
   // --------------- DELETE PRODUCT ---------------
-  public async deleteProduct() {}
+  public async deleteProduct(productId: string) {
+    const product = await ProductRepository.findProductById(productId);
+    if (!product) throw new BadRequestException("Không tìm thấy sản phẩm");
+
+    const deleteResult = await ProductRepository.deleteProductById(productId);
+    if (!deleteResult)
+      throw new BadRequestException("Xóa sản phẩm không thành công");
+
+    try {
+      if (product.images && product.images.length > 0) {
+        for (const image of product.images) {
+          await cloudinary.uploader.destroy(image.public_id);
+        }
+      }
+    } catch (error) {
+      throw new Error("Không thể xóa ảnh trên Cloudinary.");
+    }
+
+    return;
+  }
 
   // --------------- FETCH SINGLE PRODUCT ---------------
   public async fetchSingleProduct() {}

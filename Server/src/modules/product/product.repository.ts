@@ -111,4 +111,12 @@ export class ProductRepository {
     );
     return result.rows[0];
   }
+
+  static async deleteProductById(productId: string) {
+    const result = await database.query(
+      "DELETE FROM products WHERE id = $1 RETURNING *",
+      [productId]
+    );
+    return result.rows[0];
+  }
 }

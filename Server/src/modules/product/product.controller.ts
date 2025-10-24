@@ -58,7 +58,7 @@ export class ProductController {
   public updateProduct = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
       const body = updateProductSchema.parse(req.body);
-      const productId = productIdSchema.parse(req.params);
+      const productId = productIdSchema.parse(req.params.productId);
 
       const product = await this.productService.updateProduct(body, productId);
 
@@ -73,9 +73,13 @@ export class ProductController {
   // --------------- DELETE PRODUCT ---------------
   public deleteProduct = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const productId = productIdSchema.parse(req.params.productId);
+
+      await this.productService.deleteProduct(productId);
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Xóa sản phẩm thành công",
       });
     }
   );
