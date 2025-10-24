@@ -5,3 +5,5 @@ export const pageSchema = z
   .optional()
   .transform((val) => parseInt(val || "1"))
   .refine((n) => n > 0, "Page phải lớn hơn 0");
+
+export const userIdSchema = z.string();

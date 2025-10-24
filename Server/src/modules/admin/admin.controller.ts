@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { AdminService } from "./admin.service";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { HTTPSTATUS } from "../../config/http.config";
-import { pageSchema } from "./admin.validation";
+import { pageSchema, userIdSchema } from "./admin.validation";
 
 export class AdminController {
   private adminService: AdminService;
@@ -29,9 +29,13 @@ export class AdminController {
   // --------------- DELETE USER ---------------
   public deleteUser = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const userId = userIdSchema.parse(req.params.id);
+
+      await this.adminService.deleteUser(userId);
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Xóa người dùng thành công",
       });
     }
   );

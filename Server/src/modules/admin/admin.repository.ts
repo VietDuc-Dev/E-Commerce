@@ -17,4 +17,20 @@ export class AdminRepository {
     );
     return result.rows;
   }
+
+  static async findUserById(id: string) {
+    const result = await database.query(
+      "SELECT * FROM users WHERE id = $1 LIMIT 1",
+      [id]
+    );
+    return result.rows[0] || null;
+  }
+
+  static async deleteUserById(id: string) {
+    const result = await database.query(
+      "DELETE FROM users WHERE id = $1 RETURNING *",
+      [id]
+    );
+    return result.rows[0] || null;
+  }
 }
