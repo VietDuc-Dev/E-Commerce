@@ -11,6 +11,7 @@ import { ErrorCode } from "./common/enums/error-code.enum";
 import { asyncHandler } from "./middleware/asyncHandler";
 import authRoutes from "./modules/auth/auth.routes";
 import productRoutes from "./modules/product/product.routes";
+import adminRoutes from "./modules/admin/admin.routes";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -46,6 +47,7 @@ app.get(
 
 app.use(`${BASE_PATH}/auth`, authRoutes);
 app.use(`${BASE_PATH}/product`, productRoutes);
+app.use(`${BASE_PATH}/admin`, adminRoutes);
 
 app.use(errorHandler);
 
