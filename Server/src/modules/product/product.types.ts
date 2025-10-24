@@ -32,3 +32,8 @@ export interface UpdateProductDto {
   category: string;
   stock: number;
 }
+
+export interface PostProductReviewDto {
+  rating: number;
+  comment: string;
+}

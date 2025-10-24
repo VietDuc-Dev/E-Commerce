@@ -55,6 +55,11 @@ export const fetchAllProductsSchema = z.object({
   search: z.string().optional(),
 });
 
+export const postProductReviewSchema = z.object({
+  rating: z.number({ message: "Vui lòng thêm xếp hạng" }),
+  comment: z.string({ message: "vui lòng thêm nhận xét" }).min(1),
+});
+
 // --------------- CREATE PRODUCT ---------------
 export const createProductSchema = z.object({
   name: nameSchema,

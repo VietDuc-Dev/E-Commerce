@@ -4,6 +4,7 @@ import { ProductRepository } from "./product.repository";
 import {
   CreateProductDto,
   FetchAllProductsDto,
+  PostProductReviewDto,
   UpdateProductDto,
 } from "./product.types";
 import { v2 as cloudinary } from "cloudinary";
@@ -159,7 +160,36 @@ export class ProductService {
   }
 
   // --------------- POST PRODUCT REVIEW ---------------
-  public async postProductReview() {}
+  public async postProductReview(
+    data: PostProductReviewDto,
+    productId: string,
+    userId: string
+  ) {
+    const hasPurchased = await ProductRepository.hasUserPurchasedProduct(
+      userId,
+      productId
+    );
+    if (!hasPurchased) {
+      throw new BadRequestException(
+        "Bạn chỉ xem được các sản phẩm mình đã mua"
+      );
+    }
+
+    const product = await ProductRepository.findProductById(productId);
+    if (!product) throw new BadRequestException("Không tìm thấy sản phẩm");
+
+    const review = await ProductRepository.upsertReview(
+      productId,
+      userId,
+      data.rating,
+      data.comment
+    );
+    const updatedProduct = await ProductRepository.updateProductRating(
+      productId
+    );
+
+    return { review, product: updatedProduct };
+  }
 
   // --------------- DELETE REVIEW ---------------
   public async deleteReview() {}

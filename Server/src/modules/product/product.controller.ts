@@ -6,6 +6,7 @@ import {
   createProductSchema,
   fetchAllProductsSchema,
   pageSchema,
+  postProductReviewSchema,
   productIdSchema,
   updateProductSchema,
 } from "./product.validation";
@@ -102,9 +103,20 @@ export class ProductController {
   // --------------- POST PRODUCT REVIEW ---------------
   public postProductReview = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const productId = productIdSchema.parse(req.params.productId);
+      const body = postProductReviewSchema.parse(req.body);
+
+      const { review, product } = await this.productService.postProductReview(
+        body,
+        productId,
+        req.user.id
+      );
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
         message: "",
+        review,
+        product,
       });
     }
   );
