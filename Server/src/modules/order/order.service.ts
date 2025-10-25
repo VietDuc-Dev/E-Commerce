@@ -82,7 +82,11 @@ export class OrderService {
   }
 
   // --------------- FETCH MY ORDERS ---------------
-  public async fetchMyOrders() {}
+  public async fetchMyOrders(userId: string) {
+    const myOrders = await OrderRepository.fetchMyOrders(userId);
+
+    return myOrders;
+  }
 
   // --------------- FETCH ALL ORDERS ---------------
   public async fetchAllOrders() {}
