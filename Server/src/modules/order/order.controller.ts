@@ -93,9 +93,14 @@ export class OrderController {
   // --------------- DELETE ORDER ---------------
   public deleteOrder = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const orderId = orderIdSchema.parse(req.params.orderId);
+
+      const result = await this.orderService.deleteOrder(orderId)
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Xóa đơn hàng thành công",
+        result
       });
     }
   );

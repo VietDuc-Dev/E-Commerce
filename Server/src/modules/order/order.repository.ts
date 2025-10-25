@@ -184,4 +184,12 @@ export class OrderRepository {
     );
     return result.rows[0];
   }
+
+  static async deleteOrder(orderId: string) {
+    const result = await database.query(
+      `DELETE FROM orders WHERE id = $1 RETURNING *`,
+      [orderId]
+    );
+    return result.rows[0] || null;
+  }
 }

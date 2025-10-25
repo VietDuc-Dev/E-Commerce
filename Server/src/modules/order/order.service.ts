@@ -106,5 +106,10 @@ export class OrderService {
   }
 
   // --------------- DELETE ORDER ---------------
-  public async deleteOrder() {}
+  public async deleteOrder(orderId: string) {
+    const deletedOrder = await OrderRepository.deleteOrder(orderId);
+    if (!deletedOrder) throw new BadRequestException("Không tìm thấy đơn hàng");
+
+    return deletedOrder;
+  }
 }
