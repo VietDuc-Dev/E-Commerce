@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+export const orderIdSchema = z.string();
+
 const ProductImageSchema = z.object({
   url: z.string().url(),
 });

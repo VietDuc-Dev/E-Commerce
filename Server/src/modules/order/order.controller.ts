@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { OrderService } from "./order.service";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { HTTPSTATUS } from "../../config/http.config";
-import { placeNewOrderSchema } from "./order.validation";
+import { orderIdSchema, placeNewOrderSchema } from "./order.validation";
 
 export class OrderController {
   private orderService: OrderService;
@@ -29,9 +29,14 @@ export class OrderController {
   // --------------- FETCH SINGLE ORDER ---------------
   public fetchSingleOrder = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const orderId = orderIdSchema.parse(req.params.orderId);
+
+      const order = await this.orderService.fetchSingleOrder(orderId);
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Dữ liệu đơn hàng",
+        order,
       });
     }
   );

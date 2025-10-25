@@ -75,7 +75,11 @@ export class OrderService {
   }
 
   // --------------- FETCH SINGLE ORDER ---------------
-  public async fetchSingleOrder() {}
+  public async fetchSingleOrder(orderId: string) {
+    const order = await OrderRepository.fetchSingleOrder(orderId);
+
+    return order;
+  }
 
   // --------------- FETCH MY ORDERS ---------------
   public async fetchMyOrders() {}
