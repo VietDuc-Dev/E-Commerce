@@ -96,7 +96,14 @@ export class OrderService {
   }
 
   // --------------- UPDATE ORDER STATUS ---------------
-  public async updateOrderStatus() {}
+  public async updateOrderStatus(status: string, orderId: string) {
+    const existingOrder = await OrderRepository.findById(orderId);
+    if (!existingOrder)
+      throw new BadRequestException("Không tìm thấy đơn hàng");
+
+    const updatedOrder = await OrderRepository.updateStatus(orderId, status);
+    return updatedOrder;
+  }
 
   // --------------- DELETE ORDER ---------------
   public async deleteOrder() {}

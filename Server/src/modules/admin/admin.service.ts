@@ -1,4 +1,4 @@
-import { OrderStatusEnumType } from "../../common/enums/admin.enum";
+import { OrderStatusEnumType } from "../../common/enums/order.enum";
 import { BadRequestException } from "../../common/utils/catchError";
 import { AdminRepository } from "./admin.repository";
 import { v2 as cloudinary } from "cloudinary";

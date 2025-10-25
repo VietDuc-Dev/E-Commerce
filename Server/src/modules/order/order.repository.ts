@@ -168,4 +168,20 @@ export class OrderRepository {
 
     return result.rows;
   }
+
+  // --------------- UPDATE ORDER STATUS ---------------
+  static async findById(orderId: string) {
+    const result = await database.query(`SELECT * FROM orders WHERE id = $1`, [
+      orderId,
+    ]);
+    return result.rows[0] || null;
+  }
+
+  static async updateStatus(orderId: string, status: string) {
+    const result = await database.query(
+      `UPDATE orders SET order_status = $1 WHERE id = $2 RETURNING *`,
+      [status, orderId]
+    );
+    return result.rows[0];
+  }
 }

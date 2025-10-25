@@ -2,7 +2,11 @@ import { Request, Response } from "express";
 import { OrderService } from "./order.service";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { HTTPSTATUS } from "../../config/http.config";
-import { orderIdSchema, placeNewOrderSchema } from "./order.validation";
+import {
+  orderIdSchema,
+  placeNewOrderSchema,
+  statusSchema,
+} from "./order.validation";
 
 export class OrderController {
   private orderService: OrderService;
@@ -70,9 +74,18 @@ export class OrderController {
   // --------------- UPDATE ORDER STATUS ---------------
   public updateOrderStatus = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const status = statusSchema.parse(req.body.status);
+      const orderId = orderIdSchema.parse(req.params.orderId);
+
+      const updateOrder = await this.orderService.updateOrderStatus(
+        status,
+        orderId
+      );
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Trạng thái đơn hàng cập nhật thành công",
+        updateOrder,
       });
     }
   );

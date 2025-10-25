@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { OrderStatusEnum } from "../../common/enums/order.enum";
 
 export const orderIdSchema = z.string();
 
@@ -32,3 +33,5 @@ export const placeNewOrderSchema = z.object({
 });
 
 export type PlaceNewOrderDto = z.infer<typeof placeNewOrderSchema>;
+
+export const statusSchema = z.enum(Object.values(OrderStatusEnum));
