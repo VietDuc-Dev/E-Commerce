@@ -43,9 +43,12 @@ export class AdminController {
   // --------------- DASHBOARD STATS ---------------
   public dashboardStats = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const result = await this.adminService.dashboardStats();
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Dữ liệu dashboard stats",
+        ...result
       });
     }
   );
