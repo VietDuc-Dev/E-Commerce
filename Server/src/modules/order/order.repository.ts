@@ -133,4 +133,39 @@ export class OrderRepository {
 
     return result.rows;
   }
+
+  // --------------- FETCH ALL ORDERS ---------------
+  static async fetchAllOrders() {
+    const result = await database.query(
+      `
+        SELECT o.*,
+        COALESCE(json_agg(
+        json_build_object(
+        'order_item_id', oi.id,
+        'order_id', oi.order_id,
+        'product_id', oi.product_id,
+        'quantity', oi.quantity,
+        'price', oi.price,
+        'image', oi.image,
+        'title', oi.title
+        )
+        ) FILTER (WHERE oi.id IS NOT NULL), '[]' ) AS order_items, json_build_object(
+          'full_name', s.full_name,
+          'city', s.city,
+          'district', s.district,
+          'ward', s.ward,
+          'addressDetail', s.addressDetail,
+          'phone', s.phone
+        ) AS shipping_info
+         
+        FROM orders o
+        LEFT JOIN order_items oi ON o.id = oi.order_id
+        LEFT JOIN shipping_info s ON o.id = s.order_id
+        WHERE o.paid_at IS NOT NULL
+        GROUP BY o.id, s.id
+        `
+    );
+
+    return result.rows;
+  }
 }

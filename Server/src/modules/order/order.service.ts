@@ -89,7 +89,11 @@ export class OrderService {
   }
 
   // --------------- FETCH ALL ORDERS ---------------
-  public async fetchAllOrders() {}
+  public async fetchAllOrders() {
+    const orders = await OrderRepository.fetchAllOrders();
+
+    return orders;
+  }
 
   // --------------- UPDATE ORDER STATUS ---------------
   public async updateOrderStatus() {}

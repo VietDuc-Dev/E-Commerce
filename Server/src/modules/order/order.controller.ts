@@ -57,9 +57,12 @@ export class OrderController {
   // --------------- FETCH ALL ORDERS ---------------
   public fetchAllOrders = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const orders = await this.orderService.fetchAllOrders();
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Tất cả đơn hàng",
+        orders,
       });
     }
   );
