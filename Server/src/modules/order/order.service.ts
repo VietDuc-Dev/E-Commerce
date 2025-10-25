@@ -1,10 +1,19 @@
 export class OrderService {
-  // --------------- GET ALL USER ---------------
-  public async createProduct() {}
+  // --------------- PLACE NEW ORDER ---------------
+  public async placeNewOrder() {}
 
-  // --------------- DELETE USER ---------------
-  public async deleteUser() {}
+  // --------------- FETCH SINGLE ORDER ---------------
+  public async fetchSingleOrder() {}
 
-  // --------------- DASHBOARD STATS ---------------
-  public async dashboardStats() {}
+  // --------------- FETCH MY ORDERS ---------------
+  public async fetchMyOrders() {}
+
+  // --------------- FETCH ALL ORDERS ---------------
+  public async fetchAllOrders() {}
+
+  // --------------- UPDATE ORDER STATUS ---------------
+  public async updateOrderStatus() {}
+
+  // --------------- DELETE ORDER ---------------
+  public async deleteOrder() {}
 }
