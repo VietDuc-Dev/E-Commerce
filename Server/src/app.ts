@@ -12,6 +12,7 @@ import { asyncHandler } from "./middleware/asyncHandler";
 import authRoutes from "./modules/auth/auth.routes";
 import productRoutes from "./modules/product/product.routes";
 import adminRoutes from "./modules/admin/admin.routes";
+import { paymentWebhookRouter } from "./modules/payment/payment.webhook";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -23,6 +24,8 @@ app.use(
     credentials: true,
   })
 );
+
+app.post(`${BASE_PATH}/payment`, paymentWebhookRouter);
 
 app.use(cookieParser());
 app.use(express.json());
