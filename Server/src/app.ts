@@ -13,6 +13,7 @@ import authRoutes from "./modules/auth/auth.routes";
 import productRoutes from "./modules/product/product.routes";
 import adminRoutes from "./modules/admin/admin.routes";
 import { paymentWebhookRouter } from "./modules/payment/payment.webhook";
+import orderRoutes from "./modules/order/order.routes";
 
 const app = express();
 const BASE_PATH = config.BASE_PATH;
@@ -51,6 +52,7 @@ app.get(
 app.use(`${BASE_PATH}/auth`, authRoutes);
 app.use(`${BASE_PATH}/product`, productRoutes);
 app.use(`${BASE_PATH}/admin`, adminRoutes);
+app.use(`${BASE_PATH}/order`, orderRoutes);
 
 app.use(errorHandler);
 

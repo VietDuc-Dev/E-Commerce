@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { OrderService } from "./order.service";
 import { asyncHandler } from "../../middleware/asyncHandler";
 import { HTTPSTATUS } from "../../config/http.config";
+import { placeNewOrderSchema } from "./order.validation";
 
 export class OrderController {
   private orderService: OrderService;
@@ -13,9 +14,14 @@ export class OrderController {
   // --------------- PLACE NEW ORDER ---------------
   public placeNewOrder = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const body = placeNewOrderSchema.parse(req.body);
+
+      const result = await this.orderService.placeNewOrder(body, req.user.id);
+
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "",
+        message: "Đặt hàng thành công. Bạn vui lòng hoàn tất thanh toán",
+        ...result,
       });
     }
   );

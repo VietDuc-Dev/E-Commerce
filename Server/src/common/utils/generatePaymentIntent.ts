@@ -11,7 +11,7 @@ export async function generatePaymentIntent(
   try {
     const paymentIntent = await stripe.paymentIntents.create({
       amount: totalPrice,
-      currency: "VNĐ",
+      currency: "usd",
     });
 
     await database.query(
