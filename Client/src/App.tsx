@@ -1,7 +1,26 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Layout components
+import AppNavbar from "./layout/AppNavbar";
+
+// Pages
+import Index from "./pages/Home";
+import Footer from "./layout/Footer/Footer";
+
 function App() {
   return (
     <>
-      <h1 className="text-red-700 font-bold">Vite + React</h1>
+      <BrowserRouter>
+        <div className="flex flex-col min-h-screen bg-background">
+          <AppNavbar />
+          <main className="flex-1">
+            <Routes>
+              <Route path="/" element={<Index />} />
+            </Routes>
+          </main>
+          <Footer />
+        </div>
+      </BrowserRouter>
     </>
   );
 }
