@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 // Layout components
-import AppNavbar from "./layout/AppNavbar";
+import Header from "./layout/Header/Header";
 
 // Pages
 import Index from "./pages/Home";
@@ -12,7 +12,7 @@ function App() {
     <>
       <BrowserRouter>
         <div className="flex flex-col min-h-screen bg-background">
-          <AppNavbar />
+          <Header />
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Index />} />

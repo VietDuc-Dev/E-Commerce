@@ -1,3 +1,9 @@
+export const headerData = [
+  { title: "Trang chủ", href: "/" },
+  { title: "Sản phẩm", href: "/shop" },
+  { title: "Giới thiệu", href: "/about" },
+  { title: "Liên hệ", href: "/contact" },
+];
 export const quickLinksData = [
   { title: "Giới thiệu cửa hàng", href: "/about" },
   { title: "Liên hệ", href: "/contact" },
