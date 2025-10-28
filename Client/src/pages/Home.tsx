@@ -1,9 +1,10 @@
+import Container from "@/components/Container";
+import Banner from "@/components/Home/Banner";
+
 export default function Home() {
   return (
-    <div className="flex justify-between">
-      <div>1</div>
-      <div>2</div>
-      <div>3</div>
-    </div>
+    <Container>
+      <Banner />
+    </Container>
   );
 }
