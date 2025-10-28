@@ -1,8 +1,10 @@
 import { headerData } from "@/constant/data";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const HeaderMenu = () => {
-  const pathname = "";
+  const location = useLocation();
+
+  const pathname = location.pathname;
 
   return (
     <div className="hidden lg:inline-flex w-1/3 items-center justify-center gap-7 text-sm capitalize font-semibold text-lightColor">

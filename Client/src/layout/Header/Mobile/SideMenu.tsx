@@ -2,7 +2,7 @@ import Logo from "@/components/Logo";
 import { X } from "lucide-react";
 import { headerData } from "@/constant/data";
 import SocialMedia from "../../Footer/SocialMedia";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 interface SidebarProps {
@@ -11,8 +11,12 @@ interface SidebarProps {
 }
 
 const SideMenu: React.FC<SidebarProps> = ({ isOpen, onClose }) => {
-  const pathname = "";
+  const location = useLocation();
+
+  const pathname = location.pathname;
+
   const sidebarRef = useOutsideClick<HTMLDivElement>(onClose);
+
   return (
     <div
       className={`fixed inset-y-0 h-screen left-0 z-50 w-full bg-black/50 text-white/70 shadow-xl ${
