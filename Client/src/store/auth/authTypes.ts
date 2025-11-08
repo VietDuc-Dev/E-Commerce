@@ -32,8 +32,17 @@ export interface UpdateProfile {
   avatar?: unknown;
 }
 
+export interface AuthUser {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+  avatar?: { url: string };
+  created_at: string;
+}
+
 export interface AuthState {
-  authUser: null | [];
+  authUser: AuthUser | null;
   isSigningUp: boolean;
   isLoggingIn: boolean;
   isUpdatingProfile: boolean;

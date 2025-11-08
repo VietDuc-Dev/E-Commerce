@@ -60,12 +60,6 @@ const LoginModal = () => {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const data = new FormData();
-
-    data.append("email", formData.email);
-    data.append("password", formData.password);
-    if (mode === AuthModeEnum.signup) data.append("name", formData.name);
-
     if (mode === AuthModeEnum.forgot) {
       dispatch(forgotPassword(formData.email)).then(() => {
         dispatch(toggleAuthPopup());
