@@ -3,6 +3,7 @@ import { ToastContainer } from "react-toastify";
 
 // Layout components
 import Header from "./layout/Header/Header";
+import LoginModal from "./components/auth/LoginModal";
 
 // Pages
 import Index from "./pages/Home";
@@ -14,6 +15,7 @@ function App() {
       <BrowserRouter>
         <div className="flex flex-col min-h-screen bg-background">
           <Header />
+          <LoginModal />
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Index />} />
