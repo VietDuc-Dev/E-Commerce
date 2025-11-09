@@ -35,4 +35,5 @@ export const {
   toggleCart,
   toggleAIModal,
 } = popupSlice.actions;
+
 export default popupSlice.reducer;

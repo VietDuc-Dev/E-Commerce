@@ -66,7 +66,7 @@ export class ProductRepository {
       WHERE p.created_at >= NOW() - INTERVAL '30 days'
       GROUP BY p.id
       ORDER BY p.created_at DESC
-      LIMIT 8;
+      LIMIT 10;
     `;
     const result = await database.query(query);
     return result.rows;

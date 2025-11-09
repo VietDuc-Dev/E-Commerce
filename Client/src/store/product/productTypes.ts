@@ -7,14 +7,23 @@ export interface FetchAllProducts {
   page: number;
 }
 
+interface ProductImageType {
+  url: string;
+  public_id: string;
+}
+
 export interface Product {
-  _id: string;
+  id: string;
   name: string;
+  description: string;
   price: number;
-  ratings: number;
-  images: { url: string }[];
-  stock: number;
   category: string;
+  ratings: number;
+  images: ProductImageType[];
+  stock: number;
+  created_by: string;
+  created_at: string;
+  review_count: number;
 }
 
 export interface Review {
@@ -28,6 +37,13 @@ export interface Review {
   };
 }
 
+export interface Paginnation {
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
+
 export interface FetchAllProductsResponse {
   products: Product[];
   totalProducts: number;
@@ -39,7 +55,7 @@ export interface ProductState {
   loading: boolean;
   products: Product[];
   productDetails: Product | null;
-  totalProducts: number;
+  paginnation: Paginnation | null;
   topRatedProducts: Product[];
   newProducts: Product[];
   aiSearching: boolean;

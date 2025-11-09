@@ -14,18 +14,26 @@ import ProfilePhanel from "./components/auth/ProfilePanel";
 import Index from "./pages/Home";
 import Footer from "./layout/Footer/Footer";
 import { Loader } from "lucide-react";
+import { fetchAllProducts } from "./store/product/productThunks";
 
 function App() {
   const { authUser, isCheckingAuth } = useSelector(
     (state: RootState) => state.auth
   );
+
   const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     dispatch(getUser());
   }, [getUser]);
 
-  if (isCheckingAuth && !authUser) {
+  useEffect(() => {
+    dispatch(fetchAllProducts());
+  }, []);
+
+  const { products } = useSelector((state: RootState) => state.product);
+
+  if ((isCheckingAuth && !authUser) || !products) {
     return (
       <div className="flex items-center justify-center h-screen">
         <Loader className="size-10 animate-spin" />

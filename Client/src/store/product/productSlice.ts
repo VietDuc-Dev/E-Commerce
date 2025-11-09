@@ -4,7 +4,7 @@ import {
   fetchAllProducts,
   fetchProductDetails,
   fetchProductWithAI,
-  postReview,
+  // postReview,
 } from "./productThunks";
 import type { ProductState } from "./productTypes";
 
@@ -12,7 +12,7 @@ const initialState: ProductState = {
   loading: false,
   products: [],
   productDetails: null,
-  totalProducts: 0,
+  paginnation: null,
   topRatedProducts: [],
   newProducts: [],
   aiSearching: false,
@@ -33,7 +33,7 @@ const productSlice = createSlice({
       .addCase(fetchAllProducts.fulfilled, (state, action) => {
         state.loading = false;
         state.products = action.payload.products;
-        state.totalProducts = action.payload.totalProducts ?? 0;
+        state.paginnation = action.payload.pagination ?? 0;
         state.newProducts = action.payload.newProducts ?? [];
         state.topRatedProducts = action.payload.topRatedProducts ?? [];
       })
@@ -53,16 +53,16 @@ const productSlice = createSlice({
         state.loading = false;
       })
 
-      .addCase(postReview.pending, (state) => {
-        state.isPostingReview = true;
-      })
-      .addCase(postReview.fulfilled, (state, action) => {
-        state.isPostingReview = false;
-        state.productReviews = [action.payload, ...state.productReviews];
-      })
-      .addCase(postReview.rejected, (state) => {
-        state.isPostingReview = false;
-      })
+      // .addCase(postReview.pending, (state) => {
+      //   state.isPostingReview = true;
+      // })
+      // .addCase(postReview.fulfilled, (state, action) => {
+      //   state.isPostingReview = false;
+      //   state.productReviews = [action.payload, ...state.productReviews];
+      // })
+      // .addCase(postReview.rejected, (state) => {
+      //   state.isPostingReview = false;
+      // })
 
       .addCase(deleteReview.pending, (state) => {
         state.isReviewDeleting = true;
@@ -83,7 +83,7 @@ const productSlice = createSlice({
       .addCase(fetchProductWithAI.fulfilled, (state, action) => {
         state.aiSearching = false;
         state.products = action.payload.products;
-        state.totalProducts = action.payload.products.length;
+        state.paginnation = action.payload.pagination.total;
       })
       .addCase(fetchProductWithAI.rejected, (state) => {
         state.aiSearching = false;
