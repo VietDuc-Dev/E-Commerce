@@ -28,7 +28,7 @@ const ProfilePhanel = () => {
 
   const [name, setName] = useState(authUser?.name || "");
   const [email, setEmail] = useState(authUser?.email || "");
-  const [avatar, setAvatar] = useState(null);
+  const [avatar, setAvatar] = useState<File | null>(null);
 
   useEffect(() => {
     if (authUser) {
@@ -148,7 +148,7 @@ const ProfilePhanel = () => {
                     <Input
                       id="avatar"
                       type="file"
-                      onChange={(e) => setAvatar(e.target.files[0])}
+                      onChange={(e) => setAvatar(e.target.files?.[0] ?? null)}
                     />
                   </div>
 
