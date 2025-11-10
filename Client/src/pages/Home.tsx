@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 export default function Home() {
   const { newProducts } = useSelector((state: RootState) => state.product);
-  console.log(newProducts);
 
   return (
     <Container>

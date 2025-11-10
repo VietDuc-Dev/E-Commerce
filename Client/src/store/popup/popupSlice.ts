@@ -5,9 +5,9 @@ const popupSlice = createSlice({
   initialState: {
     isAuthPopupOpen: false,
     isSidebarOpen: false,
-    isSearchBarOpen: false,
-    isCartOpen: false,
-    isAIPopupOpen: false,
+    // isSearchBarOpen: false,
+    // isCartOpen: false,
+    // isAIPopupOpen: false,
   },
   reducers: {
     toggleAuthPopup(state) {
@@ -16,24 +16,24 @@ const popupSlice = createSlice({
     toggleSidebar(state) {
       state.isSidebarOpen = !state.isSidebarOpen;
     },
-    toggleSearchBar(state) {
-      state.isSearchBarOpen = !state.isSearchBarOpen;
-    },
-    toggleCart(state) {
-      state.isCartOpen = !state.isCartOpen;
-    },
-    toggleAIModal(state) {
-      state.isAIPopupOpen = !state.isAIPopupOpen;
-    },
+    // toggleSearchBar(state) {
+    //   state.isSearchBarOpen = !state.isSearchBarOpen;
+    // },
+    // toggleCart(state) {
+    //   state.isCartOpen = !state.isCartOpen;
+    // },
+    // toggleAIModal(state) {
+    //   state.isAIPopupOpen = !state.isAIPopupOpen;
+    // },
   },
 });
 
 export const {
   toggleAuthPopup,
   toggleSidebar,
-  toggleSearchBar,
-  toggleCart,
-  toggleAIModal,
+  // toggleSearchBar,
+  // toggleCart,
+  // toggleAIModal,
 } = popupSlice.actions;
 
 export default popupSlice.reducer;

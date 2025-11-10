@@ -2,7 +2,6 @@ import { responseError } from "@/lib/handleError";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import http from "@/lib/http";
-import { toggleAIModal } from "../popup/popupSlice";
 
 export const fetchAllProducts = createAsyncThunk(
   "product/fetchAll",
@@ -76,7 +75,6 @@ export const fetchProductWithAI = createAsyncThunk(
   async (userPrompt: string, thunkAPI) => {
     try {
       const res = await http.post(`/product/ai-search`, userPrompt);
-      thunkAPI.dispatch(toggleAIModal());
       return res.data;
     } catch (error) {
       const message = responseError(error);

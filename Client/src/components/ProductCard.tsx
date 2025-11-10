@@ -3,10 +3,14 @@ import { Title } from "./ui/text";
 import { StarIcon } from "lucide-react";
 import PriceView from "./PriceView";
 import AddToCartButton from "./AddToCartButton";
-import ProductSideMenu from "./ProductSideMenu";
+import ProductFavorite from "./ProductFavorite";
 import type { Product } from "@/store/product/productTypes";
 
 const ProductCard = ({ product }: { product: Product }) => {
+  const isNew =
+    Date.now() - new Date(product.created_at).getTime() <
+    3 * 24 * 60 * 60 * 1000;
+
   return (
     <div className="text-sm border-[1px] rounded-md border-darkBlue/20 group bg-white">
       <div className="relative group overflow-hidden bg-shop_light_bg">
@@ -22,9 +26,9 @@ const ProductCard = ({ product }: { product: Product }) => {
             />
           </Link>
         )}
-        <ProductSideMenu product={product} />
+        <ProductFavorite product={product} />
 
-        {product && (
+        {isNew && (
           <p className="absolute top-2 left-2 z-10 text-xs border border-shop_orange/50 px-2 rounded-full group-hover:border-lightGreen hover:text-shop_dark_green hoverEffect">
             New!
           </p>

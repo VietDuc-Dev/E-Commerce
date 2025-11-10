@@ -1,57 +1,37 @@
 import { Button } from "./ui/button";
 import { cn } from "@/lib/utils";
 import { ShoppingBag } from "lucide-react";
-// import useStore from "@/store";
-import PriceFormatter from "./PriceFormatter";
-import type { ProductType } from "@/types/api.type";
-// import QuantityButtons from "./QuantityButtons";
+import { useDispatch } from "react-redux";
+import type { Product } from "@/store/product/productTypes";
+import { addToCart } from "@/store/cart/cartSlice";
+import { toast } from "react-toastify";
 
 interface Props {
-  product: ProductType;
+  product: Product;
   className?: string;
 }
 
 const AddToCartButton = ({ product, className }: Props) => {
   const isOutOfStock = product?.stock === 0;
 
-  const handleAddToCart = () => {
-    // if ((product?.stock as number) > itemCount) {
-    //   addItem(product);
-    //   toast.success(
-    //     `${product?.name?.substring(0, 12)}... added successfully!`
-    //   );
-    // } else {
-    //   toast.error("Can not add more than available stock");
-    // }
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    if (product.stock > 0) {
+      dispatch(addToCart({ product, quantity: 1 }));
+      toast.success(
+        `${product.name.substring(0, 12)}... đã thêm vào giỏ hàng!`
+      );
+    } else {
+      toast.error("Không thể thêm sản phẩm");
+    }
   };
 
   return (
     <div className="w-full h-12 flex items-center">
-      {/* {itemCount ? (
-        <div className="text-sm w-full">
-          <div className="flex items-center justify-between">
-            <span className="text-xs text-darkColor/80">Quantity</span>
-            <QuantityButtons product={product} />
-          </div>
-          <div className="flex items-center justify-between border-t pt-1">
-            <span className="text-xs font-semibold">Subtotal</span>
-            <PriceFormatter
-              amount={product?.price ? product?.price * itemCount : 0}
-            />
-          </div>
-        </div>
-      ) : (
-        <Button
-          onClick={handleAddToCart}
-          disabled={isOutOfStock}
-          className={cn(
-            "w-full bg-shop_dark_green/80 text-lightBg shadow-none border border-shop_dark_green/80 font-semibold tracking-wide text-white hover:bg-shop_dark_green hover:border-shop_dark_green hoverEffect",
-            className
-          )}
-        >
-          <ShoppingBag /> {isOutOfStock ? "Out of Stock" : "Add to Cart"}
-        </Button>
-      )} */}
       <Button
         onClick={handleAddToCart}
         disabled={isOutOfStock}

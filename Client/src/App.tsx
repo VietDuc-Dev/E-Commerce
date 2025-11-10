@@ -4,17 +4,18 @@ import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "./store/store";
 import { useEffect } from "react";
 import { getUser } from "./store/auth/authThunks";
+import { fetchAllProducts } from "./store/product/productThunks";
+import { Loader } from "lucide-react";
 
 // Layout components
 import Header from "./layout/Header/Header";
+import Footer from "./layout/Footer/Footer";
 import LoginModal from "./components/auth/LoginModal";
 import ProfilePhanel from "./components/auth/ProfilePanel";
 
 // Pages
 import Index from "./pages/Home";
-import Footer from "./layout/Footer/Footer";
-import { Loader } from "lucide-react";
-import { fetchAllProducts } from "./store/product/productThunks";
+import Cart from "./pages/Cart";
 
 function App() {
   const { authUser, isCheckingAuth } = useSelector(
@@ -51,6 +52,7 @@ function App() {
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/cart" element={<Cart />} />
             </Routes>
           </main>
           <Footer />
