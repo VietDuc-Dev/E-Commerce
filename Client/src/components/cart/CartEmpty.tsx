@@ -4,12 +4,12 @@ import { Link } from "react-router-dom";
 
 const CartEmpty = () => {
   return (
-    <div>
+    <div className="pt-10">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
-        className="bg-white p-8 max-w-md w-full space-y-8"
+        className="bg-white p-8 w-full space-y-8"
       >
         <motion.div
           animate={{
@@ -54,10 +54,10 @@ const CartEmpty = () => {
           </p>
         </div>
 
-        <div>
+        <div className="flex justify-center">
           <Link
             to="/shop"
-            className="block bg-darkColor/5 border border-darkColor/20 text-center py-2.5 rounded-full text-sm font-semibold tracking-wide hover:border-darkColor hover:bg-darkColor hover:text-white hoverEffect"
+            className="w-1/3 block bg-darkColor/5 border border-darkColor/20 text-center py-2.5 rounded-full text-sm font-semibold tracking-wide hover:border-darkColor hover:bg-darkColor hover:text-white hoverEffect"
           >
             Xem thêm sản phẩm
           </Link>

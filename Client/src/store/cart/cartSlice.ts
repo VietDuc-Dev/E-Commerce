@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { CartState } from "./cartTypes";
+import { toast } from "react-toastify";
 
+const storedCart = localStorage.getItem("cart");
 const initialState: CartState = {
-  cart: [],
+  cart: storedCart ? JSON.parse(storedCart) : [],
 };
 
 const cartSlice = createSlice({
@@ -32,22 +34,45 @@ const cartSlice = createSlice({
       );
     },
 
-    updateCartQuantity(state, action) {
-      const item = state.cart.find(
-        (item) => item.product.id === action.payload.id
-      );
-      if (item) {
-        item.quantity += action.payload.quantity;
+    addItem(state, action) {
+      const { product, quantity } = action.payload;
+
+      if (product.stock > quantity) {
+        const existingItem = state.cart.find(
+          (item) => item.product.id === product.id
+        );
+
+        if (existingItem) {
+          existingItem.quantity += 1;
+        } else {
+          state.cart.push({ product, quantity: 1 });
+        }
+      } else {
+        toast.error(`Sản phẩm chỉ còn ${product.stock}`);
       }
     },
 
-    clearCart(state) {
-      state.cart = [];
+    removeItem(state, action) {
+      const { product } = action.payload;
+
+      const existingItem = state.cart.find(
+        (item) => item.product.id === product.id
+      );
+
+      if (existingItem) {
+        if (existingItem.quantity > 1) {
+          existingItem.quantity -= 1;
+        } else {
+          state.cart = state.cart.filter(
+            (item) => item.product.id !== product.id
+          );
+        }
+      }
     },
   },
 });
 
-export const { addToCart, removeFromCart, updateCartQuantity, clearCart } =
+export const { addToCart, removeFromCart, addItem, removeItem } =
   cartSlice.actions;
 
 export default cartSlice.reducer;

@@ -22,9 +22,6 @@ const AddToCartButton = ({ product, className }: Props) => {
 
     if (product.stock > 0) {
       dispatch(addToCart({ product, quantity: 1 }));
-      toast.success(
-        `${product.name.substring(0, 12)}... đã thêm vào giỏ hàng!`
-      );
     } else {
       toast.error("Không thể thêm sản phẩm");
     }

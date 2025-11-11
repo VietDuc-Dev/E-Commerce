@@ -3,11 +3,11 @@ import ProductCard from "../ProductCard";
 import type { Product } from "@/store/product/productTypes";
 import Loading from "../Loading";
 
-interface NewProductsProps {
+interface ProductsGird {
   products: Product[];
 }
 
-const NewProducts = ({ products }: NewProductsProps) => {
+const ProductsGird = ({ products }: ProductsGird) => {
   return (
     <div>
       {products?.length ? (
@@ -33,4 +33,4 @@ const NewProducts = ({ products }: NewProductsProps) => {
   );
 };
 
-export default NewProducts;
+export default ProductsGird;
