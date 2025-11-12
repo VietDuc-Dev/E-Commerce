@@ -12,6 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { removeFromCart } from "@/store/cart/cartSlice";
+import { toggleAuthPopup } from "@/store/popup/popupSlice";
 import type { RootState } from "@/store/store";
 import { ShoppingBag, Trash, Heart } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
@@ -20,6 +21,7 @@ import { Link } from "react-router-dom";
 const CartPage = () => {
   const dispatch = useDispatch();
   const { cart } = useSelector((state: RootState) => state.cart);
+  const { authUser } = useSelector((state: RootState) => state.auth);
 
   let total = 0;
 
@@ -164,12 +166,24 @@ const CartPage = () => {
                           amount={totalCart}
                         />
                       </div>
-                      <Button
-                        className="bg-shop_dark_green/90 text-white/90 hover:text-white hover:bg-shop_dark_green w-full rounded-full font-semibold tracking-wide hoverEffect"
-                        size="lg"
-                      >
-                        Tiến hành thanh toán
-                      </Button>
+                      {authUser ? (
+                        <Link to={"/payment"}>
+                          <Button
+                            className="bg-shop_dark_green/90 text-white/90 hover:text-white hover:bg-shop_dark_green w-full rounded-full font-semibold tracking-wide hoverEffect"
+                            size="lg"
+                          >
+                            Tiến hành thanh toán
+                          </Button>
+                        </Link>
+                      ) : (
+                        <Button
+                          onClick={() => dispatch(toggleAuthPopup())}
+                          className="bg-shop_dark_green/90 text-white/90 hover:text-white hover:bg-shop_dark_green w-full rounded-full font-semibold tracking-wide hoverEffect"
+                          size="lg"
+                        >
+                          Tiến hành thanh toán
+                        </Button>
+                      )}
                     </div>
                   </div>
                 </div>

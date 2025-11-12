@@ -6,8 +6,13 @@ import CartIcon from "@/components/CartIcon";
 import FavoriteButton from "@/components/FavoriteButton";
 import LoginButton from "@/components/LoginButton";
 import MobileMenu from "./Mobile/MobileMenu";
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
+import { Link } from "react-router-dom";
+import { Logs } from "lucide-react";
 
 const Header = () => {
+  const { authUser } = useSelector((state: RootState) => state.auth);
   return (
     <header className="sticky top-0 z-50 py-5 bg-white backdrop-blur-md">
       <Container className="flex items-center justify-between text-lightColor">
@@ -20,6 +25,19 @@ const Header = () => {
           <SearchBar />
           <CartIcon />
           <FavoriteButton />
+
+          {authUser && (
+            <Link
+              to={"/orders"}
+              className="group relative hover:text-shop_light_green hoverEffect"
+            >
+              <Logs />
+              <span className="absolute -top-1 -right-1 bg-shop_btn_dark_green text-white h-3.5 w-3.5 rounded-full text-xs font-semibold flex items-center justify-center">
+                {/* {orders?.length ? orders?.length : 0} */} 0
+              </span>
+            </Link>
+          )}
+
           <LoginButton />
         </div>
       </Container>

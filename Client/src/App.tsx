@@ -16,6 +16,7 @@ import ProfilePhanel from "./components/auth/ProfilePanel";
 // Pages
 import Index from "./pages/Home";
 import Cart from "./pages/Cart";
+import Order from "./pages/Orders";
 
 function App() {
   const { authUser, isCheckingAuth } = useSelector(
@@ -53,6 +54,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/cart" element={<Cart />} />
+              <Route path="/orders" element={<Order />} />
             </Routes>
           </main>
           <Footer />
