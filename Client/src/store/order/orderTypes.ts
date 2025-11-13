@@ -29,3 +29,12 @@ export interface OrderProp {
   order_items: OrderItem[];
   shipping_info: ShippingInfo;
 }
+
+export interface OrderState {
+  myOrders: OrderProp[];
+  fetchingOrders: boolean;
+  placingOrder: boolean;
+  finalPrice: number | null;
+  orderStep: number;
+  paymentIntent: string;
+}
