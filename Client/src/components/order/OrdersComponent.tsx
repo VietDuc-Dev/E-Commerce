@@ -3,12 +3,15 @@ import { format } from "date-fns";
 import { Tooltip, TooltipContent, TooltipTrigger } from "../ui/tooltip";
 import { STATUS_COLORS, STATUS_LABELS } from "@/constant/orderEnum";
 import type { OrderProp } from "@/store/order/orderTypes";
+import OrderDetailDialog from "./OrderDetailDialog";
+import { useState } from "react";
 
 interface OrdersComponentProps {
   orders: OrderProp[];
 }
 
 const OrdersComponent = ({ orders }: OrdersComponentProps) => {
+  const [selectedOrder, setSelectedOrder] = useState<OrderProp | null>(null);
   return (
     <div className="space-y-3 ">
       {orders.map((order) => (
@@ -18,7 +21,10 @@ const OrdersComponent = ({ orders }: OrdersComponentProps) => {
             <div>
               <Tooltip>
                 <TooltipTrigger asChild>
-                  <button className="text-lg font-semibold from-foreground mb-1">
+                  <button
+                    onClick={() => setSelectedOrder(order)}
+                    className="text-lg font-semibold from-foreground mb-1"
+                  >
                     Đơn hàng #{order?.id}
                   </button>
                 </TooltipTrigger>
@@ -63,7 +69,7 @@ const OrdersComponent = ({ orders }: OrdersComponentProps) => {
           <div className="space-y-4">
             {order?.order_items?.map((item) => (
               <div className="flex items-center justify-between space-x-4 p-4 bg-secondary/50 rounded-lg">
-                <div className="flex items-center">
+                <div className="flex items-center gap-3">
                   <img
                     src={item.image}
                     alt={item.title}
@@ -89,6 +95,11 @@ const OrdersComponent = ({ orders }: OrdersComponentProps) => {
           </div>
         </div>
       ))}
+      <OrderDetailDialog
+        order={selectedOrder}
+        isOpen={!!selectedOrder}
+        onClose={() => setSelectedOrder(null)}
+      />
     </div>
   );
 };
