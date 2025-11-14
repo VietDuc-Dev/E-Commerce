@@ -1,3 +1,5 @@
+import type { CartItem } from "../cart/cartTypes";
+
 interface OrderItem {
   order_item_id: string;
   order_id: string;
@@ -8,13 +10,23 @@ interface OrderItem {
   title: string;
 }
 
-interface ShippingInfo {
+export interface ShippingInfo {
   full_name: string | null;
   city: string | null;
   district: string | null;
   ward: string | null;
   addressDetail: string | null;
   phone: string | null;
+}
+
+export interface PlaceOrder {
+  full_name: string | null;
+  city: string | null;
+  district: string | null;
+  ward: string | null;
+  addressDetail: string | null;
+  phone: string | null;
+  orderedItems: CartItem[];
 }
 
 export interface OrderProp {

@@ -2,6 +2,7 @@ import { responseError } from "@/lib/handleError";
 import http from "@/lib/http";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
+import type { PlaceOrder } from "./orderTypes";
 
 export const fetchMyOrders = createAsyncThunk(
   "order/orders/me",
@@ -19,7 +20,7 @@ export const fetchMyOrders = createAsyncThunk(
 
 export const placeOrder = createAsyncThunk(
   "order/new",
-  async (data, thunkAPI) => {
+  async (data: PlaceOrder, thunkAPI) => {
     try {
       const res = await http.post("/order/new", data);
       toast.success(res.data.message);

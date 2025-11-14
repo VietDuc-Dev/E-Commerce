@@ -26,7 +26,7 @@ app.use(
   })
 );
 
-app.post(`${BASE_PATH}/payment`, paymentWebhookRouter);
+app.use(`${BASE_PATH}/payment`, paymentWebhookRouter);
 
 app.use(cookieParser());
 app.use(express.json());
