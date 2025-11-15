@@ -1,7 +1,6 @@
 import Container from "@/components/Container";
 import Logo from "@/components/Logo";
 import HeaderMenu from "./HeaderMenu";
-import SearchBar from "@/components/SearchBar";
 import CartIcon from "@/components/CartIcon";
 import FavoriteButton from "@/components/FavoriteButton";
 import LoginButton from "@/components/LoginButton";
@@ -9,7 +8,7 @@ import MobileMenu from "./Mobile/MobileMenu";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
 import { Link } from "react-router-dom";
-import { Logs } from "lucide-react";
+import { Logs, Search } from "lucide-react";
 
 const Header = () => {
   const { authUser } = useSelector((state: RootState) => state.auth);
@@ -22,7 +21,7 @@ const Header = () => {
         </div>
         <HeaderMenu />
         <div className="w-auto md:w-1/3 flex items-center justify-end gap-5">
-          <SearchBar />
+          <Search className="w-5 h-5 hover:text-shop_light_green hoverEffect" />
           <CartIcon />
           <FavoriteButton />
 

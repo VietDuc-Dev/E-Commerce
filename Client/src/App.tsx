@@ -15,6 +15,7 @@ import ProfilePhanel from "./components/auth/ProfilePanel";
 
 // Pages
 import Index from "./pages/Home";
+import Products from "./pages/Products";
 import Cart from "./pages/Cart";
 import Order from "./pages/Orders";
 import Payment from "./pages/Payment";
@@ -54,6 +55,7 @@ function App() {
           <main className="flex-1">
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/products" element={<Products />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/orders" element={<Order />} />
               <Route path="/payment" element={<Payment />} />
