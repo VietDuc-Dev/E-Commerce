@@ -19,10 +19,11 @@ export interface CreateProductDto {
 
 export interface FetchAllProductsDto {
   availability?: AvailabilityEnumType;
-  price?: number;
+  price?: string;
   category?: string;
   ratings?: number;
   search?: string;
+  page: number;
 }
 
 export interface UpdateProductDto {

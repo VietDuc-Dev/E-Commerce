@@ -44,9 +44,8 @@ export class ProductController {
   public fetchAllProducts = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
       const body = fetchAllProductsSchema.parse(req.query);
-      const page = pageSchema.parse(req.query.page) || 1;
 
-      const product = await this.productService.fetchAllProducts(body, page);
+      const product = await this.productService.fetchAllProducts(body);
 
       return res.status(HTTPSTATUS.OK).json({
         success: true,

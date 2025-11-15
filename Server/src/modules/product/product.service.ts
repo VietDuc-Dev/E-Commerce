@@ -45,8 +45,8 @@ export class ProductService {
   }
 
   // --------------- FETCH ALL PRODUCTS ---------------
-  public async fetchAllProducts(data: FetchAllProductsDto, page: number) {
-    const { availability, price, category, ratings, search } = data;
+  public async fetchAllProducts(data: FetchAllProductsDto) {
+    const { availability, price, category, ratings, search, page } = data;
 
     const limit = 10;
     const offset = (page - 1) * limit;

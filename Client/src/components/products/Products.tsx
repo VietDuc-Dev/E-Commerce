@@ -3,47 +3,88 @@ import { AnimatePresence, motion } from "motion/react";
 import Container from "../Container";
 import { Title } from "../ui/text";
 import ProductCard from "../ProductCard";
-import Loading from "../Loading";
 import NoProductAvailable from "./NoProductAvailable";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SearchWithAI from "../SearchWithAi";
 import PriceRange from "./PriceRange";
 import Rating from "./Rating";
 import Availability from "./Availability";
 import Category from "./Category";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "@/store/store";
+import { fetchAllProducts } from "@/store/product/productThunks";
 
 interface ProductsGird {
   products: Product[];
 }
 
 const Products = ({ products }: ProductsGird) => {
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch<AppDispatch>();
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
+  const [priceRange, setPriceRange] = useState([0, 10000000]);
+  const [selectedRating, setSelectedRating] = useState<number>(0);
+  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [availability, setAvailability] = useState("");
+
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+  };
+
+  const handlePriceRangeChange = (value: number[]) => {
+    setPriceRange(value);
+  };
+
+  const handleRatingChange = (value: number) => {
+    setSelectedRating(value);
+  };
+
+  const handleCategoryChange = (value: string) => {
+    setSelectedCategory(value);
+  };
+
+  const handleAvailabilityChange = (value: string) => {
+    console.log(value);
+
+    setAvailability(value);
+  };
+
+  useEffect(() => {
+    dispatch(
+      fetchAllProducts({
+        search: searchQuery,
+        price: `${priceRange[0]}-${priceRange[1]}`,
+        ratings: selectedRating,
+        category: selectedCategory,
+        availability: availability,
+        page: 1,
+      })
+    );
+  }, [searchQuery, priceRange, selectedRating, selectedCategory, availability]);
 
   return (
     <div className="border-t">
-      <Container className="mt-5">
+      <Container className="my-5">
         <div className="sticky top-0 z-10 mb-5">
           <div className="flex items-center justify-between space-x-3">
             <Title className="text-lg uppercase tracking-wide">
               Nhận sản phẩm theo nhu cầu của bạn
             </Title>
 
-            <SearchWithAI />
+            <SearchWithAI onSearchChange={handleSearchChange} />
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-5 border-t border-t-shop_dark_green/50">
           {/* Filter */}
-          <div className="md:sticky md:top-20 md:self-start md:h-[calc(100vh-160px)] md:overflow-y-auto md:min-w-64 pb-5 md:border-r border-r-shop_btn_dark_green/50 scrollbar-hide flex-1 -space-y-5">
-            <PriceRange />
-            <Rating />
-            <Category />
-            <Availability />
+          <div className="md:sticky md:top-20 md:self-start md:h-[calc(100vh-160px)] md:overflow-y-auto md:min-w-64 pb-5 md:border-r border-r-shop_btn_dark_green/50 scrollbar-hide -space-y-5 flex-1">
+            <PriceRange onPriceRangeChange={handlePriceRangeChange} />
+            <Rating onRatingChange={handleRatingChange} />
+            <Category onCategoryChange={handleCategoryChange} />
+            <Availability onAvailabilityChange={handleAvailabilityChange} />
           </div>
-          <div className=" pt-5">
+          <div className="flex-auto w-full pt-5">
             <div className="h-[calc(100vh-160px)] overflow-y-auto pr-2 scrollbar-hide">
-              {loading ? (
-                <Loading />
-              ) : products?.length > 0 ? (
+              {products?.length > 0 ? (
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2.5">
                   <AnimatePresence>
                     {products.map((product, index) => (

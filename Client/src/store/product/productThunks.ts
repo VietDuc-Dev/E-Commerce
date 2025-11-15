@@ -3,11 +3,38 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import http from "@/lib/http";
 
+interface FetchAllProductsProps {
+  search?: string;
+  price?: string | null;
+  ratings?: number | null;
+  category?: string;
+  availability?: string;
+  page?: number | null;
+}
+
 export const fetchAllProducts = createAsyncThunk(
   "product/fetchAll",
-  async (_, thunkAPI) => {
+  async (
+    {
+      availability,
+      price,
+      category,
+      ratings,
+      search,
+      page,
+    }: FetchAllProductsProps,
+    thunkAPI
+  ) => {
     try {
-      const res = await http.get(`/product`);
+      const params = new URLSearchParams();
+      if (category) params.append("category", category);
+      if (price) params.append("price", price);
+      if (search) params.append("search", search);
+      if (ratings) params.append("ratings", String(ratings));
+      if (availability) params.append("availability", availability);
+      if (page) params.append("page", String(page));
+
+      const res = await http.get(`/product?${params.toString()}`);
       return res.data;
     } catch (error) {
       const message = responseError(error);

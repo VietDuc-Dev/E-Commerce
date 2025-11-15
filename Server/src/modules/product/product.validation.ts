@@ -49,10 +49,17 @@ const filesSchema = z
 
 export const fetchAllProductsSchema = z.object({
   availability: z.enum(Object.values(AvailabilityEnum)).optional(),
-  price: z.number().optional(),
+  price: z.string().optional(),
   category: z.string().optional(),
-  ratings: z.number().optional(),
+  ratings: z
+    .string()
+    .transform((val) => Number(val))
+    .optional(),
   search: z.string().optional(),
+  page: z
+    .string()
+    .default("1")
+    .transform((val) => Number(val)),
 });
 
 export const postProductReviewSchema = z.object({

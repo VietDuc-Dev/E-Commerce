@@ -32,7 +32,7 @@ function App() {
   }, [getUser]);
 
   useEffect(() => {
-    dispatch(fetchAllProducts());
+    dispatch(fetchAllProducts({}));
   }, []);
 
   const { products } = useSelector((state: RootState) => state.product);
