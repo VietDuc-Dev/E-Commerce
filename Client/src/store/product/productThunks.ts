@@ -101,7 +101,9 @@ export const fetchProductWithAI = createAsyncThunk(
   "product/ai-search",
   async (userPrompt: string, thunkAPI) => {
     try {
-      const res = await http.post(`/product/ai-search`, userPrompt);
+      const res = await http.post(`/product/ai-search`, {
+        userPrompt: userPrompt,
+      });
       return res.data;
     } catch (error) {
       const message = responseError(error);

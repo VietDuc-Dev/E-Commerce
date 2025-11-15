@@ -83,7 +83,7 @@ const productSlice = createSlice({
       .addCase(fetchProductWithAI.fulfilled, (state, action) => {
         state.aiSearching = false;
         state.products = action.payload.products;
-        state.paginnation = action.payload.pagination.total;
+        // state.paginnation = action.payload.pagination.total ?? 0;
       })
       .addCase(fetchProductWithAI.rejected, (state) => {
         state.aiSearching = false;

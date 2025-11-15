@@ -5,7 +5,7 @@ import { Title } from "../ui/text";
 import ProductCard from "../ProductCard";
 import NoProductAvailable from "./NoProductAvailable";
 import { useEffect, useState } from "react";
-import SearchWithAI from "../SearchWithAi";
+import SearchProducts from "./SearchProduct";
 import PriceRange from "./PriceRange";
 import Rating from "./Rating";
 import Availability from "./Availability";
@@ -13,6 +13,8 @@ import Category from "./Category";
 import { useDispatch } from "react-redux";
 import type { AppDispatch } from "@/store/store";
 import { fetchAllProducts } from "@/store/product/productThunks";
+import { useLocation } from "react-router-dom";
+import SearchWithAi from "./SearchWithAi";
 
 interface ProductsGird {
   products: Product[];
@@ -21,10 +23,20 @@ interface ProductsGird {
 const Products = ({ products }: ProductsGird) => {
   const dispatch = useDispatch<AppDispatch>();
 
-  const [searchQuery, setSearchQuery] = useState<string>("");
+  const useQuery = () => {
+    return new URLSearchParams(useLocation().search);
+  };
+
+  const query = useQuery();
+  const searchTerm = query.get("search");
+  const searchedCategory = query.get("category");
+
+  const [searchQuery, setSearchQuery] = useState<string>(searchTerm || "");
   const [priceRange, setPriceRange] = useState([0, 10000000]);
   const [selectedRating, setSelectedRating] = useState<number>(0);
-  const [selectedCategory, setSelectedCategory] = useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string>(
+    searchedCategory || ""
+  );
   const [availability, setAvailability] = useState("");
 
   const handleSearchChange = (value: string) => {
@@ -71,7 +83,10 @@ const Products = ({ products }: ProductsGird) => {
               Nhận sản phẩm theo nhu cầu của bạn
             </Title>
 
-            <SearchWithAI onSearchChange={handleSearchChange} />
+            <div className="flex flex-1 space-x-2">
+              <SearchProducts onSearchChange={handleSearchChange} />
+              <SearchWithAi />
+            </div>
           </div>
         </div>
         <div className="flex flex-col md:flex-row gap-5 border-t border-t-shop_dark_green/50">
