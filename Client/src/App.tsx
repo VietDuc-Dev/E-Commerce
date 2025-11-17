@@ -16,6 +16,7 @@ import ProfilePhanel from "./components/auth/ProfilePanel";
 // Pages
 import Index from "./pages/Home";
 import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
 import Cart from "./pages/Cart";
 import Order from "./pages/Orders";
 import Payment from "./pages/Payment";
@@ -56,6 +57,7 @@ function App() {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/products" element={<Products />} />
+              <Route path="/product/:id" element={<ProductDetail />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/orders" element={<Order />} />
               <Route path="/payment" element={<Payment />} />

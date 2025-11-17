@@ -7,7 +7,7 @@ export interface FetchAllProducts {
   page: number;
 }
 
-interface ProductImageType {
+export interface ProductImageType {
   url: string;
   public_id: string;
 }

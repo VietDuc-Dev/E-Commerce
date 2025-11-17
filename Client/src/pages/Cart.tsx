@@ -1,7 +1,7 @@
 import Container from "@/components/Container";
 import PriceFormatter from "@/components/PriceFormatter";
 import CartEmpty from "@/components/cart/CartEmpty";
-import QuantityButtons from "@/components/cart/QuantityButtons";
+import QuantityButtons from "@/components/QuantityButtons";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Title } from "@/components/ui/text";

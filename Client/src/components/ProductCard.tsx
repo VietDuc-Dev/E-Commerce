@@ -15,7 +15,7 @@ const ProductCard = ({ product }: { product: Product }) => {
     <div className="text-sm border-[1px] rounded-md border-darkBlue/20 group bg-white">
       <div className="relative group overflow-hidden bg-shop_light_bg">
         {product?.images && (
-          <Link to={`/product`}>
+          <Link to={`/product/${product.id}`}>
             <img
               src={product?.images[0]?.url}
               alt="productImage"
