@@ -24,6 +24,7 @@ export interface Product {
   created_by: string;
   created_at: string;
   review_count: number;
+  reviews?: Review[];
 }
 
 export interface Review {

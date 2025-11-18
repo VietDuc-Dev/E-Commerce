@@ -4,7 +4,7 @@ import {
   fetchAllProducts,
   fetchProductDetails,
   fetchProductWithAI,
-  // postReview,
+  postReview,
 } from "./productThunks";
 import type { ProductState } from "./productTypes";
 
@@ -47,22 +47,32 @@ const productSlice = createSlice({
       .addCase(fetchProductDetails.fulfilled, (state, action) => {
         state.loading = false;
         state.productDetails = action.payload;
-        // state.productDetails = action.payload.reviews ?? [];
+        state.productReviews = action.payload.reviews ?? [];
       })
       .addCase(fetchProductDetails.rejected, (state) => {
         state.loading = false;
       })
 
-      // .addCase(postReview.pending, (state) => {
-      //   state.isPostingReview = true;
-      // })
-      // .addCase(postReview.fulfilled, (state, action) => {
-      //   state.isPostingReview = false;
-      //   state.productReviews = [action.payload, ...state.productReviews];
-      // })
-      // .addCase(postReview.rejected, (state) => {
-      //   state.isPostingReview = false;
-      // })
+      .addCase(postReview.pending, (state) => {
+        state.isPostingReview = true;
+      })
+      .addCase(postReview.fulfilled, (state, action) => {
+        state.isPostingReview = false;
+        const newReview = action.payload;
+
+        const existingReviewIndex = state.productReviews.findIndex(
+          (rev) => rev.reviewer?.id === newReview.user_id
+        );
+
+        if (existingReviewIndex !== -1) {
+          state.productReviews[existingReviewIndex] = newReview;
+        } else {
+          state.productReviews.unshift(newReview);
+        }
+      })
+      .addCase(postReview.rejected, (state) => {
+        state.isPostingReview = false;
+      })
 
       .addCase(deleteReview.pending, (state) => {
         state.isReviewDeleting = true;

@@ -114,7 +114,7 @@ export class ProductController {
 
       return res.status(HTTPSTATUS.OK).json({
         success: true,
-        message: "Đánh giá đã đăng",
+        message: "Cảm ơn bạn đã đánh giá sản phẩm",
         review,
         product,
       });

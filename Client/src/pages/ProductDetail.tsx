@@ -3,6 +3,7 @@ import Container from "@/components/Container";
 import FavoriteButton from "@/components/FavoriteButton";
 import PriceView from "@/components/PriceView";
 import ImageView from "@/components/products/ImageView";
+import ReviewsContainer from "@/components/products/ReviewsContainer";
 import { fetchProductDetails } from "@/store/product/productThunks";
 import type { AppDispatch, RootState } from "@/store/store";
 import {
@@ -66,7 +67,7 @@ const ProductDetail = () => {
                 />
               ))}
               <p className="font-semibold ml-2">
-                {productDetails.review_count || 0} đánh giá
+                {productDetails.reviews?.length || 0} đánh giá
               </p>
             </div>
           </div>
@@ -144,6 +145,10 @@ const ProductDetail = () => {
           </div>
         </div>
       </Container>
+      <ReviewsContainer
+        product={productDetails}
+        productReviews={productReviews}
+      />
     </div>
   );
 };

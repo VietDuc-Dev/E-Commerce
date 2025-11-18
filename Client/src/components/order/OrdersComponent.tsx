@@ -5,6 +5,7 @@ import { STATUS_COLORS, STATUS_LABELS } from "@/constant/orderEnum";
 import type { OrderProp } from "@/store/order/orderTypes";
 import OrderDetailDialog from "./OrderDetailDialog";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 interface OrdersComponentProps {
   orders: OrderProp[];
@@ -77,7 +78,9 @@ const OrdersComponent = ({ orders }: OrdersComponentProps) => {
                   />
                   <div className="min-w-0">
                     <h4 className="font-medium text-foreground truncate">
-                      {item.title}
+                      <Link to={`/product/${item?.product_id}`}>
+                        {item.title}
+                      </Link>
                     </h4>
                     <p className="text-sm text-muted-foreground">
                       Số lượng: {item.quantity}

@@ -12,7 +12,7 @@ const ProductCard = ({ product }: { product: Product }) => {
     3 * 24 * 60 * 60 * 1000;
 
   return (
-    <div className="text-sm border-[1px] rounded-md border-darkBlue/20 group bg-white">
+    <div className="text-sm border rounded-md border-darkBlue/20 group bg-white">
       <div className="relative group overflow-hidden bg-shop_light_bg">
         {product?.images && (
           <Link to={`/product/${product.id}`}>

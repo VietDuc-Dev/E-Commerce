@@ -174,7 +174,7 @@ export class ProductService {
     );
     if (!hasPurchased) {
       throw new BadRequestException(
-        "Bạn chỉ xem được các sản phẩm mình đã mua"
+        "Bạn chỉ đánh giá được các sản phẩm mình đã mua"
       );
     }
 
@@ -195,7 +195,7 @@ export class ProductService {
   }
 
   // --------------- DELETE REVIEW ---------------
-  public async deleteReview(userId: string, productId: string) {
+  public async deleteReview(productId: string, userId: string) {
     const deletedReview = await ProductRepository.deleteReview(
       productId,
       userId

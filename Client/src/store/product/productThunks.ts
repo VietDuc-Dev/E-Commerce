@@ -2,6 +2,7 @@ import { responseError } from "@/lib/handleError";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import http from "@/lib/http";
+import type { AuthUser } from "../auth/authTypes";
 
 interface FetchAllProductsProps {
   search?: string;
@@ -58,19 +59,32 @@ export const fetchProductDetails = createAsyncThunk(
   }
 );
 
+interface PostReviewProps {
+  productId: string;
+  review: {
+    rating: number;
+    comment: string;
+  };
+  authUser: AuthUser | null;
+}
+
 export const postReview = createAsyncThunk(
   "product/post-new/review",
-  async (
-    { productId, review }: { productId: string; review: string },
-    thunkAPI
-  ) => {
+  async ({ productId, review, authUser }: PostReviewProps, thunkAPI) => {
     try {
       const res = await http.put(
         `/product/post-new/review/${productId}`,
         review
       );
       toast.success(res.data.message);
-      return res.data.review;
+      return {
+        ...res.data.review,
+        reviewer: {
+          id: authUser?.id,
+          name: authUser?.name,
+          avatar: authUser?.avatar?.url,
+        },
+      };
     } catch (error) {
       const message = responseError(error);
       toast.error(message);
@@ -80,7 +94,7 @@ export const postReview = createAsyncThunk(
 );
 
 export const deleteReview = createAsyncThunk(
-  "product/post-new/review",
+  "product/delete/review",
   async (
     { productId, reviewId }: { productId: string; reviewId: string },
     thunkAPI
