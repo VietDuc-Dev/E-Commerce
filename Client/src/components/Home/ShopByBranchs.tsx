@@ -2,6 +2,7 @@ import { GitCompareArrows, Headset, ShieldCheck, Truck } from "lucide-react";
 import { Title } from "../ui/text";
 import { Link } from "react-router-dom";
 import { brands } from "@/constant/data";
+import { motion } from "framer-motion";
 
 const extraData = [
   {
@@ -28,54 +29,61 @@ const extraData = [
 
 const ShopByBrands = () => {
   return (
-    <div className="mb-10 lg:mb-20 bg-shop_light_bg p-5 lg:p-7 rounded-md">
-      <div className="flex items-center gap-5 justify-between mb-10">
-        <Title>Thương hiệu hàng đầu</Title>
-        <Link
-          to={"/shop"}
-          className="text-sm font-semibold tracking-wide hover:text-shop_btn_dark_green hoverEffect"
-        >
-          Xem tất cả
-        </Link>
-      </div>
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2.5">
-        {brands?.map((brand) => (
+    <motion.div
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ duration: 0.5, delay: 0.1 }}
+      viewport={{ once: true, amount: 0.3 }}
+    >
+      <div className="mb-10 lg:mb-20 bg-shop_light_bg p-5 lg:p-7 rounded-md">
+        <div className="flex items-center gap-5 justify-between mb-10">
+          <Title>Thương hiệu hàng đầu</Title>
           <Link
-            key={brand?.id}
-            to={`/products?search=${brand.name}`}
-            className="bg-white w-34 h-24 flex items-center justify-center rounded-md overflow-hidden hover:shadow-lg shadow-shop_dark_green/20 hoverEffect"
+            to={"/shop"}
+            className="text-sm font-semibold tracking-wide hover:text-shop_btn_dark_green hoverEffect"
           >
-            {brand?.image && (
-              <img
-                src={brand.image}
-                alt="brandImage"
-                width={250}
-                height={250}
-                className="w-32 h-20 object-contain"
-              />
-            )}
+            Xem tất cả
           </Link>
-        ))}
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16 p-2 border shadow-sm hover:shadow-shop_light_green/20 py-5">
-        {extraData?.map((item, index) => (
-          <div
-            key={index}
-            className="flex items-center gap-3 group text-lightColor hover:text-shop_light_green"
-          >
-            <span className="inline-flex scale-100 group-hover:scale-90 hoverEffect">
-              {item?.icon}
-            </span>
-            <div className="text-sm">
-              <p className="text-darkColor/80 font-bold capitalize">
-                {item?.title}
-              </p>
-              <p className="text-lightColor">{item?.description}</p>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-2.5">
+          {brands?.map((brand) => (
+            <Link
+              key={brand?.id}
+              to={`/products?search=${brand.name}`}
+              className="bg-white w-34 h-24 flex items-center justify-center rounded-md overflow-hidden hover:shadow-lg shadow-shop_dark_green/20 hoverEffect"
+            >
+              {brand?.image && (
+                <img
+                  src={brand.image}
+                  alt="brandImage"
+                  width={250}
+                  height={250}
+                  className="w-32 h-20 object-contain"
+                />
+              )}
+            </Link>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-16 p-2 border shadow-sm hover:shadow-shop_light_green/20 py-5">
+          {extraData?.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-3 group text-lightColor hover:text-shop_light_green"
+            >
+              <span className="inline-flex scale-100 group-hover:scale-90 hoverEffect">
+                {item?.icon}
+              </span>
+              <div className="text-sm">
+                <p className="text-darkColor/80 font-bold capitalize">
+                  {item?.title}
+                </p>
+                <p className="text-lightColor">{item?.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

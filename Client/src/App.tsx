@@ -17,9 +17,11 @@ import ProfilePhanel from "./components/auth/ProfilePanel";
 import Index from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import AboutUs from "./pages/About";
 import Cart from "./pages/Cart";
 import Order from "./pages/Orders";
 import Payment from "./pages/Payment";
+import ScrollToTop from "./lib/ScrollToTop";
 
 function App() {
   const { authUser, isCheckingAuth } = useSelector(
@@ -54,10 +56,12 @@ function App() {
           <LoginModal />
           <ProfilePhanel />
           <main className="flex-1">
+            <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/products" element={<Products />} />
               <Route path="/product/:id" element={<ProductDetail />} />
+              <Route path="/about" element={<AboutUs />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/orders" element={<Order />} />
               <Route path="/payment" element={<Payment />} />
