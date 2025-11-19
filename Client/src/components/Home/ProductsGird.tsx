@@ -9,7 +9,7 @@ interface ProductsGird {
 
 const ProductsGird = ({ products }: ProductsGird) => {
   return (
-    <div>
+    <div className="mb-10 lg:mb-20">
       {products?.length ? (
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2.5 mt-10">
           <AnimatePresence>

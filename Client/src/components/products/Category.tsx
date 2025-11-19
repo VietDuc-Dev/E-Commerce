@@ -1,17 +1,23 @@
 import { useState } from "react";
 import { Title } from "../ui/text";
 import { productType } from "@/constant/data";
+import { useLocation } from "react-router-dom";
 
 interface CategoryProps {
   onCategoryChange: (value: string) => void;
 }
 
 const Category = ({ onCategoryChange }: CategoryProps) => {
-  const [value, setValue] = useState<string>("");
+  const useQuery = () => {
+    return new URLSearchParams(useLocation().search);
+  };
+
+  const query = useQuery();
+  const searchedCategory = query.get("category");
+
+  const [value, setValue] = useState<string>(searchedCategory || "");
 
   const handleCategoryClick = (category: string) => {
-    console.log(category);
-
     setValue(category);
     onCategoryChange(category);
   };
