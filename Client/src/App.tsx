@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { getUser } from "./store/auth/authThunks";
 import { fetchAllProducts } from "./store/product/productThunks";
 import { Loader } from "lucide-react";
+import ScrollToTop from "./lib/ScrollToTop";
 
 // Layout components
 import Header from "./layout/Header/Header";
@@ -22,7 +23,7 @@ import ContactPage from "./pages/Contact";
 import Cart from "./pages/Cart";
 import Order from "./pages/Orders";
 import Payment from "./pages/Payment";
-import ScrollToTop from "./lib/ScrollToTop";
+import NotFoundPage from "./pages/NotFound";
 
 function App() {
   const { authUser, isCheckingAuth } = useSelector(
@@ -60,13 +61,15 @@ function App() {
             <ScrollToTop />
             <Routes>
               <Route path="/" element={<Index />} />
+              <Route path="/password/reset/:token" element={<Index />} />
               <Route path="/products" element={<Products />} />
               <Route path="/product/:id" element={<ProductDetail />} />
-              <Route path="/about" element={<AboutUs />} />
-              <Route path="/contact" element={<ContactPage />} />
               <Route path="/cart" element={<Cart />} />
               <Route path="/orders" element={<Order />} />
               <Route path="/payment" element={<Payment />} />
+              <Route path="/about" element={<AboutUs />} />
+              <Route path="/contact" element={<ContactPage />} />
+              <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </main>
           <Footer />

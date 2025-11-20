@@ -19,7 +19,7 @@ export const categoriesData = [
   { title: "Thể thao", href: "sports" },
   { title: "Sách", href: "books" },
   { title: "Làm đẹp", href: "beauty" },
-  { title: "Mẹ và bé", href: "mom&baby" },
+  { title: "Mẹ và bé", href: "momandbaby" },
 ];
 export const productType = [
   { title: "Thiết bị điện tử", value: "electronics" },
@@ -28,7 +28,7 @@ export const productType = [
   { title: "Thể thao", value: "sports" },
   { title: "Sách", value: "books" },
   { title: "Làm đẹp", value: "beauty" },
-  { title: "Mẹ và bé", value: "mom&baby" },
+  { title: "Mẹ và bé", value: "momandbaby" },
 ];
 export const brands = [
   {

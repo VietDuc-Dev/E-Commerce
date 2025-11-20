@@ -1,8 +1,10 @@
 import AddToCartButton from "@/components/AddToCartButton";
 import Container from "@/components/Container";
 import FavoriteButton from "@/components/FavoriteButton";
+import Loading from "@/components/Loading";
 import PriceView from "@/components/PriceView";
 import ImageView from "@/components/products/ImageView";
+import NoProductAvailable from "@/components/products/NoProductAvailable";
 import ReviewsContainer from "@/components/products/ReviewsContainer";
 import { fetchProductDetails } from "@/store/product/productThunks";
 import type { AppDispatch, RootState } from "@/store/store";
@@ -31,8 +33,18 @@ const ProductDetail = () => {
     dispatch(fetchProductDetails(id));
   }, [dispatch, id]);
 
-  if (loading) return <div>Đang tải sản phẩm...</div>;
-  if (!productDetails) return <div>Không tìm thấy sản phẩm</div>;
+  if (loading)
+    return (
+      <div>
+        <Loading />
+      </div>
+    );
+  if (!productDetails)
+    return (
+      <div>
+        <NoProductAvailable />
+      </div>
+    );
 
   return (
     <div>

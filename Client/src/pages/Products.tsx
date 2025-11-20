@@ -52,8 +52,6 @@ const ProductsPage = () => {
   };
 
   const handleAvailabilityChange = (value: string) => {
-    console.log(value);
-
     setAvailability(value);
   };
 

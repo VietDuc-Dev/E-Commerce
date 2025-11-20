@@ -11,7 +11,7 @@ const Banner = () => {
           Cửa hàng dàng cho mọi nhà
         </Title>
         <Link
-          to="/shop"
+          to="/products"
           className="bg-shop_dark_green/90 text-white/90 px-5 py-2 rounded-md text-sm font-semibold hover:text-white hover:bg-shop_dark_green hoverEffect"
         >
           Mua ngay
