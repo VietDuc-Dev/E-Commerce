@@ -1,9 +1,36 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { create, StateCreator } from "zustand";
+import { immer } from "zustand/middleware/immer";
+import { createJSONStorage, devtools, persist } from "zustand/middleware";
+import createSelectors from "./selectors";
 
-export const store = configureStore({
-  reducer: {},
+type AuthState = {
+  accessToken: string | null;
+  user: null;
+  setAccessToken: (token: string) => void;
+  clearAccessToken: () => void;
+};
+
+const createAuthSlice: StateCreator<AuthState> = (set) => ({
+  accessToken: null,
+  user: null,
+  setAccessToken: (token) => set({ accessToken: token }),
+  clearAccessToken: () => set({ accessToken: null }),
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+type StoreType = AuthState;
 
-export type AppDispatch = typeof store.dispatch;
+export const useStoreBase = create<StoreType>()(
+  devtools(
+    persist(
+      immer((...a) => ({
+        ...createAuthSlice(...a),
+      })),
+      {
+        name: "session-storage",
+        storage: createJSONStorage(() => sessionStorage),
+      }
+    )
+  )
+);
+
+export const useStore = createSelectors(useStoreBase);
