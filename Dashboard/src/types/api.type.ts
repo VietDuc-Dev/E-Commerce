@@ -11,6 +11,16 @@ export type RegisterType = {
   password: string;
 };
 
+export type ForgotPasswordType = {
+  email: string;
+};
+
+export type ResetPasswordType = {
+  password: string;
+  confirmPassword: string;
+  token?: string;
+};
+
 export type UserType = {
   id: string;
   name: string;

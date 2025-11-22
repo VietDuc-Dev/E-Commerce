@@ -1,3 +1,12 @@
+import ResetPasswordForm from "@/components/auth/ResetPasswordForm";
+import AuthLayout from "./AuthPageLayout";
+
 export default function ResetPassword() {
-  return <h1 className="text-red-500">ResetPassword</h1>;
+  return (
+    <>
+      <AuthLayout>
+        <ResetPasswordForm />
+      </AuthLayout>
+    </>
+  );
 }

@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router";
-import { EyeCloseIcon, EyeIcon } from "../../icons";
+import { Link } from "react-router";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
-import Checkbox from "../form/input/Checkbox";
 import { useMutation } from "@tanstack/react-query";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -18,23 +16,16 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Loader } from "lucide-react";
-import { registerMutationFn } from "@/lib/api";
+import { forgotPasswordMutationFn } from "@/lib/api";
 
-export default function SignUpForm() {
-  const [showPassword, setShowPassword] = useState(false);
-  const [isChecked, setIsChecked] = useState(false);
-  const [isCheckedMessage, setIsCheckedMessage] = useState(false);
-
-  const navigate = useNavigate();
+export default function ForgotPasswordForm() {
+  const [isMessage, setIsMessage] = useState(false);
 
   const { mutate, isPending } = useMutation({
-    mutationFn: registerMutationFn,
+    mutationFn: forgotPasswordMutationFn,
   });
 
   const formSchema = z.object({
-    name: z.string().trim().min(1, {
-      message: "Bạn chưa nhập tên",
-    }),
     email: z
       .string()
       .trim()
@@ -42,35 +33,21 @@ export default function SignUpForm() {
         message: "Bạn chưa điền email",
       })
       .email("Email không đúng"),
-    password: z.string().trim().min(1, {
-      message: "Mật khẩu còn thiếu",
-    }),
   });
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
       email: "",
-      password: "",
     },
   });
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    if (!isChecked) {
-      setIsCheckedMessage(true);
-      return;
-    } else {
-      setIsCheckedMessage(false);
-    }
-
     if (isPending) return;
 
     mutate(values, {
-      onSuccess: (data) => {
-        toast.success(data.message);
-
-        navigate("/dashboard/login");
+      onSuccess: () => {
+        setIsMessage(true);
       },
       onError(error) {
         const message = responseError(error);
@@ -85,10 +62,10 @@ export default function SignUpForm() {
         <div>
           <div className="mb-5 sm:mb-8">
             <h1 className="mb-2 font-semibold text-gray-800 text-title-sm dark:text-white/90 sm:text-title-md">
-              Đăng ký
+              Quên mật khẩu
             </h1>
             <p className="text-sm text-gray-500 dark:text-gray-400">
-              Nhập email và mật khẩu của bạn để đăng ký tài khoản!
+              Nhập email của bạn để xác minh thay đổi mật khẩu!
             </p>
           </div>
           <div>
@@ -147,27 +124,6 @@ export default function SignUpForm() {
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div className="space-y-5">
-                  <div>
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <Label>
-                            Tên<span className="text-error-500">*</span>
-                          </Label>
-                          <FormControl>
-                            <Input
-                              type="text"
-                              placeholder="shop connect"
-                              {...field}
-                            />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
                   {/* <!-- Email --> */}
                   <div>
                     <FormField
@@ -189,63 +145,10 @@ export default function SignUpForm() {
                       )}
                     />
                   </div>
-                  {/* <!-- Password --> */}
-                  <div>
-                    <FormField
-                      control={form.control}
-                      name="password"
-                      render={({ field }) => (
-                        <FormItem>
-                          <Label>
-                            Mật khẩu <span className="text-error-500">*</span>{" "}
-                          </Label>
-                          <div className="relative">
-                            <FormControl>
-                              <Input
-                                type={showPassword ? "text" : "password"}
-                                placeholder="********"
-                                {...field}
-                              />
-                            </FormControl>
-                            <span
-                              onClick={() => setShowPassword(!showPassword)}
-                              className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
-                            >
-                              {showPassword ? (
-                                <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
-                              ) : (
-                                <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
-                              )}
-                            </span>
-                          </div>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
-                  {/* <!-- Checkbox --> */}
-                  <div className="flex items-center gap-3">
-                    <Checkbox
-                      className="w-5 h-5"
-                      checked={isChecked}
-                      onChange={setIsChecked}
-                    />
 
-                    <p className="inline-block font-normal text-gray-500 dark:text-gray-400">
-                      Việc tạo tài khoản có nghĩa là bạn đồng ý với{" "}
-                      <span className="text-gray-800 dark:text-white/90">
-                        Điều khoản và Điều kiện
-                      </span>{" "}
-                      cũng như{" "}
-                      <span className="text-gray-800 dark:text-white">
-                        Chính sách quyền riêng tư của chúng tôi
-                      </span>
-                    </p>
-                  </div>
-
-                  {isCheckedMessage && (
+                  {isMessage && (
                     <div className="p-3 text-sm rounded-md text-gray-800 dark:text-white rounded-base bg-green-300 dark:bg-green-800">
-                      Bạn cần đồng ý với điều khoản và điều kiện của chúng tôi
+                      Bạn vui lòng kiểm tra email của mình đề xác nhận
                     </div>
                   )}
 
@@ -253,7 +156,7 @@ export default function SignUpForm() {
                   <div>
                     <button className="flex items-center justify-center w-full px-4 py-3 text-sm font-medium text-white transition rounded-lg bg-brand-500 shadow-theme-xs hover:bg-brand-600">
                       {isPending && <Loader className="animate-spin" />}
-                      Đăng ký
+                      Gửi
                     </button>
                   </div>
                 </div>
@@ -262,7 +165,7 @@ export default function SignUpForm() {
 
             <div className="mt-5">
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
-                Bạn đã có tài khoản?{" "}
+                Quay lại{" "}
                 <Link
                   to="/dashboard/signin"
                   className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
