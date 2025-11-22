@@ -1,7 +1,7 @@
 import React from "react";
 import GridShape from "../../components/common/GridShape";
-import { Link } from "react-router";
 import ThemeTogglerTwo from "../../components/common/ThemeTogglerTwo";
+import Logo from "@/components/Logo";
 
 export default function AuthLayout({
   children,
@@ -16,18 +16,12 @@ export default function AuthLayout({
           <div className="relative flex items-center justify-center z-1">
             {/* <!-- ===== Common Grid Shape Start ===== --> */}
             <GridShape />
-            <div className="flex flex-col items-center max-w-xs">
-              <Link to="/" className="block mb-4">
-                <img
-                  width={231}
-                  height={48}
-                  src="images/logo/auth-logo.svg"
-                  alt="Logo"
-                />
-              </Link>
-              <p className="text-center text-gray-400 dark:text-white/60">
-                Free and Open-Source Tailwind CSS Admin Dashboard Template
-              </p>
+            <div className="flex flex-col items-center max-w-sm">
+              <Logo className="text-title-2xl" />
+              <h1 className="text-title-sm">
+                Online Store <br />
+                <span>Cửa hàng dàng cho mọi nhà</span>
+              </h1>
             </div>
           </div>
         </div>

@@ -1,3 +1,16 @@
+export type loginType = { email: string; password: string };
+export type LoginResponseType = {
+  message: string;
+  accessToken: string;
+  user: UserType;
+};
+
+export type RegisterType = {
+  name: string;
+  email: string;
+  password: string;
+};
+
 export type UserType = {
   id: string;
   name: string;

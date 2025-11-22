@@ -8,6 +8,7 @@ import { AppWrapper } from "./components/common/PageMeta.tsx";
 import { ThemeProvider } from "./context/ThemeContext.tsx";
 import Footer from "./components/footer/Footer.tsx";
 import QueryProvider from "./context/QueryProvider.tsx";
+import { ToastContainer } from "react-toastify";
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -16,6 +17,7 @@ createRoot(document.getElementById("root")!).render(
         <AppWrapper>
           <App />
           <Footer />
+          <ToastContainer />
         </AppWrapper>
       </ThemeProvider>
     </QueryProvider>
