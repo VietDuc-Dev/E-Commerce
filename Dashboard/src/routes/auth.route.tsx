@@ -14,7 +14,7 @@ const AuthRoute = () => {
 
   if (!user) return <Outlet />;
 
-  return <Navigate to={`/dashboard/`} replace />;
+  return <Navigate to={`/`} replace />;
 };
 
 export default AuthRoute;

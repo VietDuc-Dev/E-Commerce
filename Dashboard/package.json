@@ -29,6 +29,7 @@
     "classnames": "^2.5.1",
     "clsx": "^2.1.1",
     "flatpickr": "^4.6.13",
+    "immer": "^10.2.0",
     "lucide-react": "^0.554.0",
     "react": "^18.3.1",
     "react-apexcharts": "^1.7.0",
@@ -45,8 +46,7 @@
     "swiper": "^11.2.3",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "uninstall": "^0.0.0",
-    "zustand": "^5.0.8"
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.19.0",

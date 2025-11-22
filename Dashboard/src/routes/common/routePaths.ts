@@ -3,14 +3,14 @@ export const isAuthRoute = (pathname: string): boolean => {
 };
 
 export const AUTH_ROUTES = {
-  SIGN_IN: "/dashboard/signin",
-  SIGN_UP: "/dashboard/signup",
+  SIGN_IN: "/signin",
+  SIGN_UP: "/signup",
 };
 
 export const PROTECTED_ROUTES = {
-  DASHBOARD: "/dashboard/",
+  DASHBOARD: "/dashboard",
 };
 
 export const BASE_ROUTE = {
-  RESET_PASSWORD: "/dashboard/password/reset/:token",
+  RESET_PASSWORD: "/password/reset/:token",
 };

@@ -12,15 +12,15 @@ const options = {
 
 const http = axios.create(options);
 
-// http.interceptors.request.use((config) => {
-//   const accessToken = useStore.getState().accessToken;
+http.interceptors.request.use((config) => {
+  const accessToken = useStore.getState().accessToken;
 
-//   if (accessToken) {
-//     config.headers["Authorization"] = `Bearer ${accessToken}`;
-//   }
+  if (accessToken) {
+    config.headers["Authorization"] = `Bearer ${accessToken}`;
+  }
 
-//   return config;
-// });
+  return config;
+});
 
 http.interceptors.response.use(
   (response) => {

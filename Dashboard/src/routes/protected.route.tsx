@@ -9,7 +9,7 @@ const ProtectedRoute = () => {
     return <DashboardSkeleton />;
   }
 
-  return user ? <Outlet /> : <Navigate to="/dashboard/signup" replace />;
+  return user ? <Outlet /> : <Navigate to="/signin" replace />;
 };
 
 export default ProtectedRoute;
