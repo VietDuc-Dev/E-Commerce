@@ -26,12 +26,6 @@ export interface UpdatePassword {
   newPassword: string;
 }
 
-export interface UpdateProfile {
-  name: string;
-  email: string;
-  avatar?: unknown;
-}
-
 export interface AuthUser {
   id: string;
   name: string;

@@ -7,7 +7,6 @@ import type {
   Register,
   ResetPassword,
   UpdatePassword,
-  UpdateProfile,
 } from "./authTypes";
 import { responseError } from "@/lib/handleError";
 
@@ -121,7 +120,7 @@ export const updatePassword = createAsyncThunk(
 
 export const updateProfile = createAsyncThunk(
   "auth/profile/update",
-  async (data: UpdateProfile, thunkAPI) => {
+  async (data: FormData, thunkAPI) => {
     try {
       const res = await http.put(`/auth/profile/update`, data);
       toast.success(res.data.message);

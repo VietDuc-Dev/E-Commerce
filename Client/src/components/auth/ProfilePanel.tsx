@@ -52,22 +52,15 @@ const ProfilePhanel = () => {
   const handleUpdateProfile = (e: React.FormEvent) => {
     e.preventDefault();
 
+    const formData = new FormData();
+    formData.append("name", name);
+    formData.append("email", email);
+
     if (avatar) {
-      const data = {
-        name: name,
-        email: email,
-        avatar: avatar,
-      };
-
-      dispatch(updateProfile(data));
-    } else {
-      const data = {
-        name: name,
-        email: email,
-      };
-
-      dispatch(updateProfile(data));
+      formData.append("avatar", avatar);
     }
+
+    dispatch(updateProfile(formData));
   };
 
   const handleUpdatePassword = (e: React.FormEvent) => {

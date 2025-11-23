@@ -16,7 +16,8 @@ export default function UserMetaCard({ user }: Props) {
                   user?.avatar?.url ||
                   "https://i.pinimg.com/736x/e2/7c/87/e27c8735da98ec6ccdcf12e258b26475.jpg"
                 }
-                alt="user"
+                alt={user?.name}
+                className="w-20 h-20 rounded-full mx-auto mb-4 border-2 object-cover"
               />
             </div>
             <div className="order-3 xl:order-2">
