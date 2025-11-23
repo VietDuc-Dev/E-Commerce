@@ -8,7 +8,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
-import { responseError } from "@/lib/utils";
 import {
   Form,
   FormControl,
@@ -18,6 +17,7 @@ import {
 } from "../ui/form";
 import { Loader } from "lucide-react";
 import { resetPasswordMutationFn } from "@/lib/api";
+import { responseError } from "@/lib/handleError";
 
 export default function ResetPasswordForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -65,7 +65,7 @@ export default function ResetPasswordForm() {
       onSuccess: (data) => {
         toast.success(data.message);
 
-        navigate("/dashboard/login");
+        navigate("/login");
       },
       onError(error) {
         const message = responseError(error);
@@ -227,7 +227,7 @@ export default function ResetPasswordForm() {
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
                 Bạn đã có tài khoản?{" "}
                 <Link
-                  to="/dashboard/signin"
+                  to="/signin"
                   className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
                 >
                   Đăng nhập

@@ -9,7 +9,7 @@ import BaseLayout from "@/layout/BaseLayout";
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/dashboard">
       <Routes>
         {/* <Route element={<BaseLayout />}>
           {baseRoutePaths.map((route) => (
@@ -17,7 +17,7 @@ function AppRoutes() {
           ))}
         </Route> */}
 
-        <Route path="/" element={<AuthRoute />}>
+        <Route element={<AuthRoute />}>
           <Route element={<BaseLayout />}>
             {authenticationRoutePaths.map((route) => (
               <Route
@@ -30,7 +30,7 @@ function AppRoutes() {
         </Route>
 
         {/* Protected Route */}
-        <Route path="/" element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             {protectedRoutePaths.map((route) => (
               <Route

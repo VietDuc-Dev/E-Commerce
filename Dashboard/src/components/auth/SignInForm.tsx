@@ -18,8 +18,9 @@ import {
   FormMessage,
 } from "../ui/form";
 import { toast } from "react-toastify";
-import { responseError } from "@/lib/utils";
+
 import { Loader } from "lucide-react";
+import { responseError } from "@/lib/handleError";
 
 export default function SignInForm() {
   const [showPassword, setShowPassword] = useState(false);
@@ -64,7 +65,7 @@ export default function SignInForm() {
 
         setAccessToken(accessToken);
         const decodeUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
-        navigate(decodeUrl || `/dashboard/home`);
+        navigate(decodeUrl || `/home`);
       },
       onError: (error) => {
         const message = responseError(error);
@@ -218,7 +219,7 @@ export default function SignInForm() {
               <p className="text-sm font-normal text-center text-gray-700 dark:text-gray-400 sm:text-start">
                 Bạn chưa có tài khoản? {""}
                 <Link
-                  to="/dashboard/signup"
+                  to="/signup"
                   className="text-brand-500 hover:text-brand-600 dark:text-brand-400"
                 >
                   Đăng ký

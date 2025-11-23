@@ -8,6 +8,7 @@ export default defineConfig({
   base: "/dashboard/",
   plugins: [
     react(),
+
     svgr({
       svgrOptions: {
         icon: true,
@@ -17,6 +18,9 @@ export default defineConfig({
       },
     }),
   ],
+  server: {
+    port: 5000,
+  },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

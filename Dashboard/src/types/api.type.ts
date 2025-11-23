@@ -21,6 +21,20 @@ export type ResetPasswordType = {
   token?: string;
 };
 
+export type UpdateProfileType =
+  | FormData
+  | {
+      name: string;
+      email: string;
+      avatar?: File;
+    };
+
+export type UpdatePasswordType = {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+};
+
 export type UserType = {
   id: string;
   name: string;

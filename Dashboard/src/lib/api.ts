@@ -5,6 +5,8 @@ import {
   RegisterType,
   ForgotPasswordType,
   ResetPasswordType,
+  UpdateProfileType,
+  UpdatePasswordType,
 } from "../types/api.type";
 import http from "./http";
 
@@ -47,6 +49,15 @@ export const getCurrentUserQueryFn =
     return response.data;
   };
 
+export const updateProfileMutationFn = async (data: UpdateProfileType) => {
+  const response = await http.put(`/auth/profile/update`, data);
+  return response.data;
+};
+
+export const updatePasswordMutationFn = async (data: UpdatePasswordType) => {
+  const response = await http.put(`/auth/password/update`, data);
+  return response.data;
+};
 // ========================  ========================
 // ========================  ========================
 // ========================  ========================

@@ -1,9 +1,10 @@
+import { AUTH_ROUTES, PROTECTED_ROUTES } from "./routePaths";
 import ResetPassword from "@/pages/AuthPages/ResetPassword";
 import SignIn from "../../pages/AuthPages/SignIn";
 import SignUp from "../../pages/AuthPages/SignUp";
 import Home from "../../pages/Dashboard/Home";
-import { AUTH_ROUTES, PROTECTED_ROUTES } from "./routePaths";
 import ForgotPassword from "@/pages/AuthPages/ForgotPassword";
+import UserProfiles from "@/pages/UserProfiles";
 
 export const authenticationRoutePaths = [
   { path: AUTH_ROUTES.SIGN_IN, element: <SignIn /> },
@@ -14,6 +15,7 @@ export const authenticationRoutePaths = [
 
 export const protectedRoutePaths = [
   { path: PROTECTED_ROUTES.DASHBOARD, element: <Home /> },
+  { path: PROTECTED_ROUTES.PROFILE, element: <UserProfiles /> },
 ];
 
 // export const baseRoutePaths = [
