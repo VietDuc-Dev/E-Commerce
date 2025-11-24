@@ -16,7 +16,7 @@ import {
   UserCircleIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
-import SidebarWidget from "./SidebarWidget";
+import { Users } from "lucide-react";
 
 type NavItem = {
   name: string;
@@ -40,6 +40,11 @@ const navItems: NavItem[] = [
     icon: <UserCircleIcon />,
     name: "User Profile",
     path: "profile",
+  },
+  {
+    icon: <Users />,
+    name: "User Management",
+    path: "user-management",
   },
   {
     name: "Forms",

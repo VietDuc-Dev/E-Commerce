@@ -12,6 +12,7 @@ export const AUTH_ROUTES = {
 export const PROTECTED_ROUTES = {
   DASHBOARD: "home",
   PROFILE: "profile",
+  USERMANAGEMENT: "user-management",
 };
 
 // export const BASE_ROUTE = {

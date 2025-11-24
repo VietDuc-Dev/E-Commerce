@@ -7,6 +7,7 @@ import {
   ResetPasswordType,
   UpdateProfileType,
   UpdatePasswordType,
+  AllUserResponseType,
 } from "../types/api.type";
 import http from "./http";
 
@@ -58,6 +59,17 @@ export const updatePasswordMutationFn = async (data: UpdatePasswordType) => {
 export const logoutMutationFn = async () => {
   await http.get("/auth/logout");
 };
-// ========================  ========================
+// ======================== USERS ========================
+export const getAllUserQueryFn = async (): Promise<AllUserResponseType> => {
+  const response = await http.get("/admin/getallusers");
+  return response.data;
+};
+
+export const deleteUserMutationFn = async (
+  id: string
+): Promise<{ message: string }> => {
+  const response = await http.delete(`/admin/delete/${id}`);
+  return response.data;
+};
 // ========================  ========================
 // ========================  ========================

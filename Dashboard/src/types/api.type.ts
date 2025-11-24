@@ -48,3 +48,10 @@ export type CurrentUserResponseType = {
   message: string;
   user: UserType;
 };
+
+export type AllUserResponseType = {
+  message: string;
+  totalUser: number;
+  currentPage: number;
+  users: UserType[];
+};
