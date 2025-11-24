@@ -27,17 +27,13 @@ export const registerMutationFn = async (
   return response.data;
 };
 
-export const forgotPasswordMutationFn = async (
-  data: ForgotPasswordType
-): Promise<{ message: string }> => {
+export const forgotPasswordMutationFn = async (data: ForgotPasswordType) => {
   const response = await http.post("/auth/password/forgot", data);
 
   return response.data;
 };
 
-export const resetPasswordMutationFn = async (
-  data: ResetPasswordType
-): Promise<{ message: string }> => {
+export const resetPasswordMutationFn = async (data: ResetPasswordType) => {
   const response = await http.put(`/auth/password/reset/${data.token}`, data);
 
   return response.data;
@@ -57,6 +53,10 @@ export const updateProfileMutationFn = async (data: UpdateProfileType) => {
 export const updatePasswordMutationFn = async (data: UpdatePasswordType) => {
   const response = await http.put(`/auth/password/update`, data);
   return response.data;
+};
+
+export const logoutMutationFn = async () => {
+  await http.get("/auth/logout");
 };
 // ========================  ========================
 // ========================  ========================
