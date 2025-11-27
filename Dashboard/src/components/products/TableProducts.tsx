@@ -5,6 +5,15 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 import Badge from "../ui/badge/Badge";
 import DateVN from "@/lib/date";
 import { Download, Loader, Plus } from "lucide-react";
@@ -13,10 +22,14 @@ import ActionProduct from "./ActionProduct";
 import useProductsQuery from "@/hooks/api/use-get-products";
 import { Product } from "@/types/api.type";
 import PriceFormatter from "@/lib/price";
+import { useState } from "react";
 
 export default function TableProducts() {
-  const { data, isPending } = useProductsQuery({ page: 1 });
+  const [page, setPage] = useState(1);
 
+  const { data, isPending } = useProductsQuery({ page });
+
+  const totalPage = data?.pagination?.totalPage || 1;
   const products: Product[] = data?.products || [];
 
   return (
@@ -183,6 +196,71 @@ export default function TableProducts() {
               ))}
             </TableBody>
           </Table>
+          {/* Pagination */}
+          <div className="border-t border-gray-100 dark:border-white/[0.05]">
+            <div className="hidden lg:block px-6 py-5">
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() => setPage((p) => Math.max(1, p - 1))}
+                      className={
+                        page === 1 ? "pointer-events-none opacity-50" : ""
+                      }
+                    />
+                  </PaginationItem>
+
+                  <PaginationItem>
+                    <PaginationLink
+                      onClick={() => setPage(1)}
+                      isActive={page === 1}
+                    >
+                      1
+                    </PaginationLink>
+                  </PaginationItem>
+
+                  {totalPage >= 2 && (
+                    <PaginationItem>
+                      <PaginationLink
+                        onClick={() => setPage(2)}
+                        isActive={page === 2}
+                      >
+                        2
+                      </PaginationLink>
+                    </PaginationItem>
+                  )}
+
+                  {totalPage >= 3 && (
+                    <PaginationItem>
+                      <PaginationLink
+                        onClick={() => setPage(3)}
+                        isActive={page === 3}
+                      >
+                        3
+                      </PaginationLink>
+                    </PaginationItem>
+                  )}
+
+                  {totalPage > 3 && (
+                    <PaginationItem>
+                      <PaginationEllipsis />
+                    </PaginationItem>
+                  )}
+
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={() => setPage((p) => Math.min(totalPage, p + 1))}
+                      className={
+                        page === totalPage
+                          ? "pointer-events-none opacity-50"
+                          : ""
+                      }
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </div>
+          </div>
         </div>
         {products?.length === 0 && (
           <div className="font-semibold text-sm text-muted-foreground text-center py-5">
