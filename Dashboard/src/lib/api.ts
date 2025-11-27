@@ -8,6 +8,8 @@ import {
   UpdateProfileType,
   UpdatePasswordType,
   AllUserResponseType,
+  AllProductPayloadType,
+  AllProductResponseType,
 } from "../types/api.type";
 import http from "./http";
 
@@ -71,5 +73,25 @@ export const deleteUserMutationFn = async (
   const response = await http.delete(`/admin/delete/${id}`);
   return response.data;
 };
-// ========================  ========================
+// ======================== PRODUCT ========================
+export const getProductsQueryFn = async ({
+  availability,
+  price,
+  category,
+  ratings,
+  search,
+  page = 1,
+}: AllProductPayloadType): Promise<AllProductResponseType> => {
+  const params = new URLSearchParams();
+  if (category) params.append("category", category);
+  if (price) params.append("price", price);
+  if (search) params.append("search", search);
+  if (ratings) params.append("ratings", String(ratings));
+  if (availability) params.append("availability", availability);
+  if (page) params.append("page", String(page));
+
+  const response = await http.get(`/product?${params.toString()}`);
+  return response.data;
+};
+
 // ========================  ========================

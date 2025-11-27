@@ -13,6 +13,7 @@ export const PROTECTED_ROUTES = {
   DASHBOARD: "home",
   PROFILE: "profile",
   USERMANAGEMENT: "user-management",
+  PRODUCTS: "products-list",
 };
 
 // export const BASE_ROUTE = {
