@@ -22,9 +22,13 @@ export class ProductController {
   // --------------- CREATE PRODUCT ---------------
   public createProduct = asyncHandler(
     async (req: Request, res: Response): Promise<any> => {
+      const filesArray = Array.isArray(req.files?.images)
+        ? req.files.images
+        : [req.files?.images];
+
       const body = createProductSchema.parse({
         ...req.body,
-        images: req.files?.images,
+        images: filesArray,
       });
 
       const product = await this.productService.createProduct(

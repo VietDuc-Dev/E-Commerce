@@ -15,17 +15,19 @@ const descriptionSchema = z
   .max(1000, "Mô tả sản phẩm không vượt quá 1000 ký tự");
 
 const priceSchema = z
-  .number({ message: "Giá sản phẩm là bắt buộc" })
-  .positive("Giá sản phẩm phải lớn hơn 0");
+  .string({ message: "Giá sản phẩm là bắt buộc" })
+  .min(1, "Giá sản phẩm là bắt buộc")
+  .transform((val) => Number(val))
+  .refine((val) => val > 0, "Giá sản phẩm phải lớn hơn 0");
 
 const categorySchema = z
   .string({ message: "Danh mục sản phẩm là bắt buộc" })
   .min(2, "Danh mục phải có ít nhất 2 ký tự");
 
 const stockSchema = z
-  .number({ message: "Số lượng tồn kho là bắt buộc" })
-  .int("Số lượng phải là số nguyên")
-  .min(0, "Tồn kho không thể âm");
+  .string({ message: "Số lượng tồn kho là bắt buộc" })
+  .transform((val) => Number(val))
+  .refine((val) => val > 0, "Số lượng phải lớn hơn 0");
 
 // Schema cho một ảnh
 const singleFileSchema = z.object({

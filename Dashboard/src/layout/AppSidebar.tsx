@@ -16,7 +16,7 @@ import {
   UserCircleIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
-import { Users, WalletCards } from "lucide-react";
+import { FolderPlus, Users, WalletCards } from "lucide-react";
 
 type NavItem = {
   name: string;
@@ -46,6 +46,11 @@ const navItems: NavItem[] = [
     icon: <WalletCards />,
     name: "Products",
     path: "products-list",
+  },
+  {
+    icon: <FolderPlus />,
+    name: "Create Product",
+    path: "create-product",
   },
   {
     icon: <CalenderIcon />,

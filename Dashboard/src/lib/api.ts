@@ -94,4 +94,8 @@ export const getProductsQueryFn = async ({
   return response.data;
 };
 
+export const createProductMutationFn = async (data: FormData) => {
+  const response = await http.post(`/product/admin/create`, data);
+  return response.data;
+};
 // ========================  ========================

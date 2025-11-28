@@ -14,7 +14,6 @@ export class ProductRepository {
         data.name,
         data.description,
         data.price,
-        data.price,
         data.category,
         data.stock,
         JSON.stringify(uploadedImages),

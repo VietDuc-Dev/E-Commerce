@@ -7,6 +7,7 @@ import ForgotPassword from "@/pages/AuthPages/ForgotPassword";
 import UserProfiles from "@/pages/UserProfiles";
 import UserManagement from "@/pages/UserManagement";
 import Products from "@/pages/Products";
+import CreateProduct from "@/pages/CreateProduct";
 
 export const authenticationRoutePaths = [
   { path: AUTH_ROUTES.SIGN_IN, element: <SignIn /> },
@@ -20,6 +21,7 @@ export const protectedRoutePaths = [
   { path: PROTECTED_ROUTES.PROFILE, element: <UserProfiles /> },
   { path: PROTECTED_ROUTES.USERMANAGEMENT, element: <UserManagement /> },
   { path: PROTECTED_ROUTES.PRODUCTS, element: <Products /> },
+  { path: PROTECTED_ROUTES.CREATEPRODUCTS, element: <CreateProduct /> },
 ];
 
 // export const baseRoutePaths = [

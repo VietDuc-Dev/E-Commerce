@@ -1,8 +1,8 @@
 import { useState } from "react";
 
 interface Option {
+  title: string;
   value: string;
-  label: string;
 }
 
 interface SelectProps {
@@ -54,7 +54,7 @@ const Select: React.FC<SelectProps> = ({
           value={option.value}
           className="text-gray-700 dark:bg-gray-900 dark:text-gray-400"
         >
-          {option.label}
+          {option.title}
         </option>
       ))}
     </select>

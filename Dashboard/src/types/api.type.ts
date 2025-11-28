@@ -114,3 +114,12 @@ export type AllProductResponseType = {
   newProducts?: Product[];
   topRated?: Product[];
 };
+
+export type CreateProductPayloadType = {
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  stock: number;
+  images: File;
+};
