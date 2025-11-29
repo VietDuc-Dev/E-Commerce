@@ -5,7 +5,7 @@ import {
   UserCog,
 } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteUserMutationFn } from "@/lib/api";
+import { deleteProductMutationFn } from "@/lib/api";
 import { toast } from "react-toastify";
 import { responseError } from "@/lib/handleError";
 import { Product } from "@/types/api.type";
@@ -16,6 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { useModal } from "@/context/ModalContext";
 
 interface Props {
   product: Product;
@@ -23,9 +24,10 @@ interface Props {
 
 export default function ActionProduct({ product }: Props) {
   const queryClient = useQueryClient();
+  const { openModalUpdateProduct } = useModal();
 
   const { mutate, isPending } = useMutation({
-    mutationFn: deleteUserMutationFn,
+    mutationFn: deleteProductMutationFn,
   });
 
   const handleDeleteUser = (userId: string) => {
@@ -34,7 +36,7 @@ export default function ActionProduct({ product }: Props) {
     mutate(userId, {
       onSuccess(data) {
         queryClient.invalidateQueries({
-          queryKey: ["all-user"],
+          queryKey: ["all-products"],
         });
         toast.success(data.message);
       },
@@ -45,6 +47,7 @@ export default function ActionProduct({ product }: Props) {
       },
     });
   };
+
   return (
     <>
       <DropdownMenu modal={false}>
@@ -58,7 +61,7 @@ export default function ActionProduct({ product }: Props) {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40" align="end">
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => openModalUpdateProduct(product)}>
               <UserCog size={18} />
               Cập nhật
             </DropdownMenuItem>
@@ -76,6 +79,8 @@ export default function ActionProduct({ product }: Props) {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      
     </>
   );
 }

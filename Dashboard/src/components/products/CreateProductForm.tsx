@@ -123,10 +123,7 @@ export default function CreateProductForm() {
     <ComponentCard title="Điền các thông tin về sản phẩm của bạn ở đây">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)}>
-          <fieldset
-            disabled={isPending}
-            className="grid grid-cols-1 gap-6 xl:grid-cols-2"
-          >
+          <div className="grid grid-cols-1 gap-6 xl:grid-cols-2">
             {/* Form Left */}
             <div className="space-y-6">
               <FormField
@@ -199,7 +196,7 @@ export default function CreateProductForm() {
                     <FormControl>
                       <Input
                         type="number"
-                        placeholder="5"
+                        placeholder="50"
                         {...field}
                         onChange={(e) => field.onChange(Number(e.target.value))}
                         value={field.value || ""}
@@ -272,7 +269,7 @@ export default function CreateProductForm() {
                 {isPending ? "Đang xử lý..." : "Thêm mới"}
               </Button>
             </div>
-          </fieldset>
+          </div>
         </form>
       </Form>
     </ComponentCard>

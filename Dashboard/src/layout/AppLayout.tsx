@@ -3,6 +3,8 @@ import { Outlet } from "react-router";
 import AppHeader from "./AppHeader";
 import Backdrop from "./Backdrop";
 import AppSidebar from "./AppSidebar";
+import { ModalProvider } from "@/context/ModalContext";
+import UpdateProductModal from "@/components/products/UpdateProductModal";
 
 const LayoutContent: React.FC = () => {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
@@ -22,6 +24,7 @@ const LayoutContent: React.FC = () => {
         <div className="p-4 mx-auto max-w-screen-2xl md:p-6">
           <Outlet />
         </div>
+        <UpdateProductModal />
       </div>
     </div>
   );
@@ -30,7 +33,9 @@ const LayoutContent: React.FC = () => {
 const AppLayout: React.FC = () => {
   return (
     <SidebarProvider>
-      <LayoutContent />
+      <ModalProvider>
+        <LayoutContent />
+      </ModalProvider>
     </SidebarProvider>
   );
 };

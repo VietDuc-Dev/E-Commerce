@@ -98,4 +98,22 @@ export const createProductMutationFn = async (data: FormData) => {
   const response = await http.post(`/product/admin/create`, data);
   return response.data;
 };
+
+export const deleteProductMutationFn = async (
+  id: string
+): Promise<{ message: string }> => {
+  const response = await http.delete(`/product/admin/delete/${id}`);
+  return response.data;
+};
+
+export const updateProductMutationFn = async ({
+  data,
+  id,
+}: {
+  data: FormData;
+  id?: string;
+}) => {
+  const response = await http.put(`/product/admin/update/${id}`, data);
+  return response.data;
+};
 // ========================  ========================
