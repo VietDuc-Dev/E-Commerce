@@ -24,7 +24,7 @@ interface Props {
 
 export default function ActionProduct({ product }: Props) {
   const queryClient = useQueryClient();
-  const { openModalUpdateProduct } = useModal();
+  const { openModalUpdateProduct, openModalReviewsProduct } = useModal();
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteProductMutationFn,
@@ -65,7 +65,9 @@ export default function ActionProduct({ product }: Props) {
               <UserCog size={18} />
               Cập nhật
             </DropdownMenuItem>
-            <DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={() => openModalReviewsProduct(product.id)}
+            >
               <MessageCircleMore size={18} />
               Xem đánh giá
             </DropdownMenuItem>
@@ -79,8 +81,6 @@ export default function ActionProduct({ product }: Props) {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      
     </>
   );
 }

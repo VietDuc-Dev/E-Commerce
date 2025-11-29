@@ -10,6 +10,7 @@ import {
   AllUserResponseType,
   AllProductPayloadType,
   AllProductResponseType,
+  ReviewsProductResponseType,
 } from "../types/api.type";
 import http from "./http";
 
@@ -114,6 +115,13 @@ export const updateProductMutationFn = async ({
   id?: string;
 }) => {
   const response = await http.put(`/product/admin/update/${id}`, data);
+  return response.data;
+};
+
+export const getSingleProductQueryFn = async (
+  productId?: string
+): Promise<ReviewsProductResponseType> => {
+  const response = await http.get(`/product/singleProduct/${productId}`);
   return response.data;
 };
 // ========================  ========================

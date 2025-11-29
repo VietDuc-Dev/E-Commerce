@@ -7,6 +7,12 @@ type ModalContextType = {
   openModalUpdateProduct: (product: Product) => void;
   closeModalUpdateProduct: () => void;
   toggleModalUpdateProduct: () => void;
+
+  isModalReviewsProduct: boolean;
+  productId: string | null;
+  openModalReviewsProduct: (productId: string) => void;
+  closeModalReviewsProduct: () => void;
+  toggleModalReviewsProduct: () => void;
 };
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -22,6 +28,8 @@ export const useModal = () => {
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [isModalUpdateProduct, setIsModalUpdateProduct] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
+  const [isModalReviewsProduct, setIsModalReviewsProduct] = useState(false);
+  const [productId, setProductId] = useState<string | null>(null);
 
   const openModalUpdateProduct = (productData: Product) => {
     setProduct(productData);
@@ -37,6 +45,20 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setIsModalUpdateProduct((prev) => !prev);
   };
 
+  const openModalReviewsProduct = (productId: string) => {
+    setProductId(productId);
+    setIsModalReviewsProduct(true);
+  };
+
+  const closeModalReviewsProduct = () => {
+    setIsModalReviewsProduct(false);
+    setProduct(null);
+  };
+
+  const toggleModalReviewsProduct = () => {
+    setIsModalReviewsProduct((prev) => !prev);
+  };
+
   return (
     <ModalContext.Provider
       value={{
@@ -45,6 +67,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         openModalUpdateProduct,
         closeModalUpdateProduct,
         toggleModalUpdateProduct,
+        isModalReviewsProduct,
+        productId,
+        openModalReviewsProduct,
+        closeModalReviewsProduct,
+        toggleModalReviewsProduct,
       }}
     >
       {children}

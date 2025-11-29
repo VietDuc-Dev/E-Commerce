@@ -122,3 +122,7 @@ export type UpdateProductPayloadType = {
   category: string;
   stock: number;
 };
+
+export type ReviewsProductResponseType = {
+  product: Product;
+};

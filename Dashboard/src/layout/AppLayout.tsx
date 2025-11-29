@@ -5,6 +5,7 @@ import Backdrop from "./Backdrop";
 import AppSidebar from "./AppSidebar";
 import { ModalProvider } from "@/context/ModalContext";
 import UpdateProductModal from "@/components/products/UpdateProductModal";
+import ReviewsProductModal from "@/components/products/ReviewsProduct";
 
 const LayoutContent: React.FC = () => {
   const { isExpanded, isHovered, isMobileOpen } = useSidebar();
@@ -25,6 +26,7 @@ const LayoutContent: React.FC = () => {
           <Outlet />
         </div>
         <UpdateProductModal />
+        <ReviewsProductModal />
       </div>
     </div>
   );
