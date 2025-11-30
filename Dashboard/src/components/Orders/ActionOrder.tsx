@@ -19,7 +19,7 @@ interface Props {
 
 export default function ActionOrder({ order }: Props) {
   const queryClient = useQueryClient();
-  const { openModalUpdateProduct, openModalReviewsProduct } = useModal();
+  const { openModalDetailOrder } = useModal();
 
   const { mutate, isPending } = useMutation({
     mutationFn: deleteOrderMutationFn,
@@ -56,7 +56,7 @@ export default function ActionOrder({ order }: Props) {
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-40" align="end">
           <DropdownMenuGroup>
-            <DropdownMenuItem onClick={() => openModalReviewsProduct(order.id)}>
+            <DropdownMenuItem onClick={() => openModalDetailOrder(order)}>
               <MessageCircleMore size={18} />
               Xem chi tiết
             </DropdownMenuItem>

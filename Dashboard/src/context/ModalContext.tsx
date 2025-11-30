@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, ReactNode } from "react";
-import { Product } from "@/types/api.type";
+import { Orders, Product } from "@/types/api.type";
 
 type ModalContextType = {
   isModalUpdateProduct: boolean;
@@ -13,6 +13,12 @@ type ModalContextType = {
   openModalReviewsProduct: (productId: string) => void;
   closeModalReviewsProduct: () => void;
   toggleModalReviewsProduct: () => void;
+
+  isModalDetailOrder: boolean;
+  order: Orders | null;
+  openModalDetailOrder: (order: Orders) => void;
+  closeModalDetailOrder: () => void;
+  toggleModalDetailOrder: () => void;
 };
 
 const ModalContext = createContext<ModalContextType | undefined>(undefined);
@@ -28,19 +34,21 @@ export const useModal = () => {
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [isModalUpdateProduct, setIsModalUpdateProduct] = useState(false);
   const [product, setProduct] = useState<Product | null>(null);
+
   const [isModalReviewsProduct, setIsModalReviewsProduct] = useState(false);
   const [productId, setProductId] = useState<string | null>(null);
+
+  const [isModalDetailOrder, setIsModalDetailOrder] = useState(false);
+  const [order, setOrder] = useState<Orders | null>(null);
 
   const openModalUpdateProduct = (productData: Product) => {
     setProduct(productData);
     setIsModalUpdateProduct(true);
   };
-
   const closeModalUpdateProduct = () => {
     setIsModalUpdateProduct(false);
     setProduct(null);
   };
-
   const toggleModalUpdateProduct = () => {
     setIsModalUpdateProduct((prev) => !prev);
   };
@@ -49,16 +57,25 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setProductId(productId);
     setIsModalReviewsProduct(true);
   };
-
   const closeModalReviewsProduct = () => {
     setIsModalReviewsProduct(false);
-    setProduct(null);
+    setProductId(null);
   };
-
   const toggleModalReviewsProduct = () => {
     setIsModalReviewsProduct((prev) => !prev);
   };
 
+  const openModalDetailOrder = (orderData: Orders) => {
+    setOrder(orderData);
+    setIsModalDetailOrder(true);
+  };
+  const closeModalDetailOrder = () => {
+    setIsModalDetailOrder(false);
+    setOrder(null);
+  };
+  const toggleModalDetailOrder = () => {
+    setIsModalDetailOrder((prev) => !prev);
+  };
   return (
     <ModalContext.Provider
       value={{
@@ -67,11 +84,18 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         openModalUpdateProduct,
         closeModalUpdateProduct,
         toggleModalUpdateProduct,
+
         isModalReviewsProduct,
         productId,
         openModalReviewsProduct,
         closeModalReviewsProduct,
         toggleModalReviewsProduct,
+
+        isModalDetailOrder,
+        order,
+        openModalDetailOrder,
+        closeModalDetailOrder,
+        toggleModalDetailOrder,
       }}
     >
       {children}

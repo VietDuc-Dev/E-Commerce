@@ -5,18 +5,58 @@ import {
   TableHeader,
   TableRow,
 } from "../ui/table";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "../ui/dropdown-menu";
 import Badge from "../ui/badge/Badge";
 import DateVN from "@/lib/date";
-import { Download, Loader, Plus } from "lucide-react";
+import { ChevronDown, Download, Loader, Plus } from "lucide-react";
 import Button from "../ui/button/Button";
 import { Orders } from "@/types/api.type";
 import PriceFormatter from "@/lib/price";
 import ActionOrder from "./ActionOrder";
 import useGetAllOrder from "@/hooks/api/use-get-order";
+import { OrderStatusEnum, STATUS_LABELS } from "@/enum/statusOrder";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateStatusOrderMutationFn } from "@/lib/api";
+import { toast } from "react-toastify";
+import { responseError } from "@/lib/handleError";
 
 export default function TableOrders() {
   const { data, isLoading } = useGetAllOrder();
+
+  const queryClient = useQueryClient();
+  const { mutate, isPending } = useMutation({
+    mutationFn: updateStatusOrderMutationFn,
+  });
+
+  const ORDER_STATUS = [...Object.values(OrderStatusEnum)] as const;
+
   const orders: Orders[] = data?.orders || [];
+
+  const handleStatus = (value: string, orderId: string) => {
+    if (isPending) return;
+
+    mutate(
+      {
+        status: value,
+        id: orderId,
+      },
+      {
+        onSuccess: (data) => {
+          toast.success(data.message);
+          queryClient.invalidateQueries({ queryKey: ["all-order"] });
+        },
+        onError(error) {
+          toast.error(responseError(error));
+        },
+      }
+    );
+  };
   return (
     <div className="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-white/[0.05] dark:bg-white/[0.03]">
       <div className="max-w-full overflow-x-auto">
@@ -159,8 +199,30 @@ export default function TableOrders() {
                   <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
                     <DateVN value={item.paid_at} />
                   </TableCell>
-                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400">
-                    <Badge size="sm">{item.order_status}</Badge>
+                  <TableCell className="px-4 py-3 text-gray-500 text-start text-theme-sm dark:text-gray-400 flex">
+                    <Badge size="sm">{STATUS_LABELS[item.order_status]}</Badge>
+                    <DropdownMenu modal={false}>
+                      <DropdownMenuTrigger asChild>
+                        <button
+                          className="flex items-center text-gray-700 dropdown-toggle dark:text-gray-400"
+                          aria-label="Open menu"
+                        >
+                          <ChevronDown size={18} />
+                        </button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="w-40" align="end">
+                        <DropdownMenuGroup>
+                          {ORDER_STATUS.map((status) => (
+                            <DropdownMenuItem
+                              key={status}
+                              onClick={() => handleStatus(status, item.id)}
+                            >
+                              {STATUS_LABELS[status]}
+                            </DropdownMenuItem>
+                          ))}
+                        </DropdownMenuGroup>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
                   </TableCell>
                   <TableCell className="px-4 py-3 text-gray-500 text-theme-sm dark:text-gray-400">
                     <PriceFormatter amount={Number(item.total_price)} />

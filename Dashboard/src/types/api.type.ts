@@ -162,3 +162,7 @@ export type Orders = {
 export type AllOrderResponseType = {
   orders: Orders[];
 };
+
+export type OrderResponseType = {
+  order: Orders;
+};
