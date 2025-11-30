@@ -11,6 +11,7 @@ import {
   AllProductPayloadType,
   AllProductResponseType,
   ReviewsProductResponseType,
+  AllOrderResponseType,
 } from "../types/api.type";
 import http from "./http";
 
@@ -124,4 +125,15 @@ export const getSingleProductQueryFn = async (
   const response = await http.get(`/product/singleProduct/${productId}`);
   return response.data;
 };
-// ========================  ========================
+// ======================== ORDER ========================
+export const getAllOrderQueryFn = async (): Promise<AllOrderResponseType> => {
+  const response = await http.get("/order/admin/getall");
+  return response.data;
+};
+
+export const deleteOrderMutationFn = async (
+  id: string
+): Promise<{ message: string }> => {
+  const response = await http.delete(`/order/admin/delete/${id}`);
+  return response.data;
+};

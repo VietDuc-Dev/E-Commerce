@@ -15,6 +15,7 @@ export const PROTECTED_ROUTES = {
   USERMANAGEMENT: "user-management",
   PRODUCTS: "products-list",
   CREATEPRODUCTS: "create-product",
+  ORDERS: "orders",
 };
 
 // export const BASE_ROUTE = {
