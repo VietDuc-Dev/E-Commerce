@@ -13,6 +13,7 @@ import {
   ReviewsProductResponseType,
   AllOrderResponseType,
   OrderResponseType,
+  DashboardStatsResponseType,
 } from "../types/api.type";
 import http from "./http";
 
@@ -64,7 +65,7 @@ export const updatePasswordMutationFn = async (data: UpdatePasswordType) => {
 export const logoutMutationFn = async () => {
   await http.get("/auth/logout");
 };
-// ======================== USERS ========================
+// ======================== ADMIN ========================
 export const getAllUserQueryFn = async (): Promise<AllUserResponseType> => {
   const response = await http.get("/admin/getallusers");
   return response.data;
@@ -76,6 +77,12 @@ export const deleteUserMutationFn = async (
   const response = await http.delete(`/admin/delete/${id}`);
   return response.data;
 };
+
+export const getDashboardQueryFn =
+  async (): Promise<DashboardStatsResponseType> => {
+    const response = await http.get("/admin/fetch/dashboard-stats");
+    return response.data;
+  };
 // ======================== PRODUCT ========================
 export const getProductsQueryFn = async ({
   availability,

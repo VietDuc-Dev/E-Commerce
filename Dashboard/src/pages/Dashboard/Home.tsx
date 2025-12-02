@@ -1,39 +1,43 @@
+import { OrderStatusCounts } from "@/components/ecommerce/OrderStatusCounts";
 import EcommerceMetrics from "../../components/ecommerce/EcommerceMetrics";
-import MonthlySalesChart from "../../components/ecommerce/MonthlySalesChart";
-import StatisticsChart from "../../components/ecommerce/StatisticsChart";
-import MonthlyTarget from "../../components/ecommerce/MonthlyTarget";
-import RecentOrders from "../../components/ecommerce/RecentOrders";
-import DemographicCard from "../../components/ecommerce/DemographicCard";
-import PageMeta from "../../components/common/PageMeta";
+import TopProduct from "../../components/ecommerce/TopProduct";
+import { MonthlySales } from "@/components/ecommerce/MonthlySales";
+import { ChartBarDefault } from "@/components/ecommerce/ChartBar";
+import useGetDashboard from "@/hooks/api/use-get-dashboard";
 
 export default function Home() {
+  const { data, isLoading } = useGetDashboard();
+
+  if (isLoading) return <>Loading...</>;
+
   return (
     <>
-      <PageMeta
-        title="React.js Ecommerce Dashboard | TailAdmin - React.js Admin Dashboard Template"
-        description="This is React.js Ecommerce Dashboard page for TailAdmin - React.js Tailwind CSS Admin Dashboard Template"
-      />
       <div className="grid grid-cols-12 gap-4 md:gap-6">
-        <div className="col-span-12 space-y-6 xl:col-span-7">
-          <EcommerceMetrics />
-
-          <MonthlySalesChart />
-        </div>
-
-        <div className="col-span-12 xl:col-span-5">
-          <MonthlyTarget />
+        <div className="col-span-12">
+          <EcommerceMetrics
+            TodayRevenue={data?.todayRevenue}
+            TotalUser={data?.totalUsersCount}
+            AllTimeRevenue={data?.totalRevenueAllTime}
+          />
         </div>
 
         <div className="col-span-12">
-          <StatisticsChart />
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-6">
+            <MonthlySales monthlySales={data?.monthlySales} />
+            <OrderStatusCounts orderStatusCounts={data?.orderStatusCounts} />
+            <ChartBarDefault
+              topSellingProducts={data?.topSellingProducts}
+              lowStockProducts={data?.lowStockProducts}
+              revenueGrowth={data?.revenueGrowth}
+              newUsersThisMonth={data?.newUsersThisMonth}
+              currentMonthSales={data?.currentMonthSales}
+              orderStatusCounts={data?.orderStatusCounts}
+            />
+          </div>
         </div>
 
-        <div className="col-span-12 xl:col-span-5">
-          <DemographicCard />
-        </div>
-
-        <div className="col-span-12 xl:col-span-7">
-          <RecentOrders />
+        <div className="col-span-12">
+          <TopProduct TopProduct={data?.topSellingProducts} />
         </div>
       </div>
     </>

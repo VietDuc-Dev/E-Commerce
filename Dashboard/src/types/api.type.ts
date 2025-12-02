@@ -1,4 +1,5 @@
 import { AvailabilityType } from "@/enum/product";
+import { OrderStatusEnumType } from "@/enum/statusOrder";
 
 export type loginType = { email: string; password: string };
 export type LoginResponseType = {
@@ -165,4 +166,40 @@ export type AllOrderResponseType = {
 
 export type OrderResponseType = {
   order: Orders;
+};
+
+export type MonthlySale = {
+  month: string;
+  totalSales: number;
+};
+
+export type TopSellingProductUI = {
+  name: string;
+  image: string;
+  category: string;
+  ratings: number;
+  total_sold: number;
+};
+
+export type LowStockProduct = {
+  name: string;
+  stock: number;
+};
+
+export type DashboardStatsResponseType = {
+  totalRevenueAllTime: number;
+  todayRevenue: number;
+  yesterdayRevenue: number;
+
+  totalUsersCount: number;
+  orderStatusCounts: Record<OrderStatusEnumType, number>;
+
+  monthlySales: MonthlySale[];
+  currentMonthSales: number;
+
+  topSellingProducts: TopSellingProductUI[];
+  lowStockProducts: LowStockProduct[];
+
+  revenueGrowth: number;
+  newUsersThisMonth: number;
 };
