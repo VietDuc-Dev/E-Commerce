@@ -1,12 +1,19 @@
 import { Client } from "pg";
 import { config } from "../config/app.config";
 
+// const database = new Client({
+//   user: config.DB_USER,
+//   host: config.DB_HOST,
+//   database: config.DB_NAME,
+//   password: config.DB_PASSWORD,
+//   port: Number(config.DB_PORT),
+// });
+
 const database = new Client({
-  user: config.DB_USER,
-  host: config.DB_HOST,
-  database: config.DB_NAME,
-  password: config.DB_PASSWORD,
-  port: Number(config.DB_PORT),
+  connectionString: config.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 export const connectDatabase = async (): Promise<void> => {
