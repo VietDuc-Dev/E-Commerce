@@ -11,5 +11,19 @@ export const fileSchema = z
   .refine((file) => !file || file.size <= 5 * 1024 * 1024, "File quá lớn");
 
 export const imagesSchema = z
-  .array(fileSchema)
-  .nonempty("Hãy chọn ít nhất 1 ảnh");
+  .array(
+    z.instanceof(File, {
+      message: "File không hợp lệ",
+    })
+  )
+  .min(1, "Phải upload ít nhất 1 ảnh")
+  .max(5, "Chỉ được upload tối đa 5 ảnh")
+  .refine(
+    (files) =>
+      files.every((file) =>
+        ["image/jpeg", "image/png", "image/webp"].includes(file.type)
+      ),
+    {
+      message: "Ảnh phải là jpg, png hoặc webp",
+    }
+  );
