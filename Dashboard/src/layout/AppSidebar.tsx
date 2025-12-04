@@ -1,15 +1,16 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
-
-// Assume these icons are imported from an icon library
-import {
-  ChevronDownIcon,
-  GridIcon,
-  HorizontaLDots,
-  UserCircleIcon,
-} from "../icons/index";
 import { useSidebar } from "../context/SidebarContext";
-import { FolderPlus, ShoppingBag, Users, WalletCards } from "lucide-react";
+import {
+  ChartNoAxesCombined,
+  ChevronDown,
+  CircleUserRound,
+  FolderPlus,
+  ShoppingBag,
+  TextAlignStart,
+  Users,
+  WalletCards,
+} from "lucide-react";
 
 type NavItem = {
   name: string;
@@ -20,13 +21,13 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   {
-    icon: <GridIcon />,
+    icon: <ChartNoAxesCombined />,
     name: "Thống kê",
     path: "home",
   },
 
   {
-    icon: <UserCircleIcon />,
+    icon: <CircleUserRound />,
     name: "Trang cá nhân",
     path: "profile",
   },
@@ -182,7 +183,7 @@ const AppSidebar: React.FC = () => {
                 <span className="menu-item-text">{nav.name}</span>
               )}
               {(isExpanded || isHovered || isMobileOpen) && (
-                <ChevronDownIcon
+                <ChevronDown
                   className={`ml-auto w-5 h-5 transition-transform duration-200 ${
                     openSubmenu?.type === menuType &&
                     openSubmenu?.index === index
@@ -337,7 +338,7 @@ const AppSidebar: React.FC = () => {
                 {isExpanded || isHovered || isMobileOpen ? (
                   "Menu"
                 ) : (
-                  <HorizontaLDots className="size-6" />
+                  <TextAlignStart className="size-6" />
                 )}
               </h2>
               {renderMenuItems(navItems, "main")}
