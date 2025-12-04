@@ -7,7 +7,7 @@ import {
   GridIcon,
   HorizontaLDots,
   UserCircleIcon,
-} from "../icons";
+} from "../icons/index";
 import { useSidebar } from "../context/SidebarContext";
 import { FolderPlus, ShoppingBag, Users, WalletCards } from "lucide-react";
 
