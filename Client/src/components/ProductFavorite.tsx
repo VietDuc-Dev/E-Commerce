@@ -1,14 +1,8 @@
 import { cn } from "@/lib/utils";
-import type { Product } from "@/store/product/productTypes";
+
 import { Heart } from "lucide-react";
 
-const ProductFavorite = ({
-  product,
-  className,
-}: {
-  product: Product;
-  className?: string;
-}) => {
+const ProductFavorite = ({ className }: { className?: string }) => {
   //   const { favoriteProduct, addToFavorite } = useStore();
   //   const [existingProduct, setExistingProduct] = useState<Product | null>(null);
   //   useEffect(() => {

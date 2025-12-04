@@ -1,6 +1,6 @@
 import type { Product } from "@/store/product/productTypes";
 import { Heart } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -8,7 +8,7 @@ interface Props {
   product?: Product | null | undefined;
 }
 
-const FavoriteButton = ({ showProduct = false, product }: Props) => {
+const FavoriteButton = ({ showProduct = false }: Props) => {
   const [existingProduct, setExistingProduct] = useState<boolean>(false);
 
   // const [existingProduct, setExistingProduct] = useState<Product | null>(null);
