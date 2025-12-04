@@ -23,7 +23,7 @@ const navItems: NavItem[] = [
   {
     icon: <ChartNoAxesCombined />,
     name: "Thống kê",
-    path: "home",
+    path: "/",
   },
 
   {

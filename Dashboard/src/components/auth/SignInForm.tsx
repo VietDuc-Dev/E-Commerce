@@ -64,7 +64,7 @@ export default function SignInForm() {
 
         setAccessToken(accessToken);
         const decodeUrl = returnUrl ? decodeURIComponent(returnUrl) : null;
-        navigate(decodeUrl || `/home`);
+        navigate(decodeUrl || `/`);
       },
       onError: (error) => {
         const message = responseError(error);

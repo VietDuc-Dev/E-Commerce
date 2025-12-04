@@ -10,7 +10,7 @@ export const AUTH_ROUTES = {
 };
 
 export const PROTECTED_ROUTES = {
-  DASHBOARD: "home",
+  DASHBOARD: "",
   PROFILE: "profile",
   USERMANAGEMENT: "user-management",
   PRODUCTS: "products-list",
