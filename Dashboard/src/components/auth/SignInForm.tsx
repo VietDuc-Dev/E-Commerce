@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate, useSearchParams } from "react-router";
-import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Button from "../ui/button/Button";
@@ -19,7 +18,7 @@ import {
 } from "../ui/form";
 import { toast } from "react-toastify";
 
-import { Loader } from "lucide-react";
+import { Loader, Eye, EyeOff } from "lucide-react";
 import { responseError } from "@/lib/handleError";
 
 export default function SignInForm() {
@@ -185,9 +184,9 @@ export default function SignInForm() {
                               className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                             >
                               {showPassword ? (
-                                <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                                <Eye className="fill-gray-500 dark:fill-gray-400 size-5" />
                               ) : (
-                                <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                                <EyeOff className="fill-gray-500 dark:fill-gray-400 size-5" />
                               )}
                             </span>
                           </div>

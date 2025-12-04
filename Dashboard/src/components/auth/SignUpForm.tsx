@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router";
-import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import Checkbox from "../form/input/Checkbox";
@@ -16,7 +15,7 @@ import {
   FormItem,
   FormMessage,
 } from "../ui/form";
-import { Loader } from "lucide-react";
+import { Loader,Eye, EyeOff, } from "lucide-react";
 import { registerMutationFn } from "@/lib/api";
 import { responseError } from "@/lib/handleError";
 
@@ -212,9 +211,9 @@ export default function SignUpForm() {
                               className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                             >
                               {showPassword ? (
-                                <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                                <Eye className="fill-gray-500 dark:fill-gray-400 size-5" />
                               ) : (
-                                <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                                <EyeOff className="fill-gray-500 dark:fill-gray-400 size-5" />
                               )}
                             </span>
                           </div>

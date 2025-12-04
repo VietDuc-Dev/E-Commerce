@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
-import { EyeCloseIcon, EyeIcon } from "../../icons";
 import Label from "../form/Label";
 import Input from "../form/input/InputField";
 import { useMutation } from "@tanstack/react-query";
@@ -15,7 +14,7 @@ import {
   FormItem,
   FormMessage,
 } from "../ui/form";
-import { Loader } from "lucide-react";
+import { Eye, EyeOff, Loader } from "lucide-react";
 import { resetPasswordMutationFn } from "@/lib/api";
 import { responseError } from "@/lib/handleError";
 
@@ -165,9 +164,9 @@ export default function ResetPasswordForm() {
                               className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                             >
                               {showPassword ? (
-                                <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                                <Eye className="fill-gray-500 dark:fill-gray-400 size-5" />
                               ) : (
-                                <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                                <EyeOff className="fill-gray-500 dark:fill-gray-400 size-5" />
                               )}
                             </span>
                           </div>
@@ -200,9 +199,9 @@ export default function ResetPasswordForm() {
                               className="absolute z-30 -translate-y-1/2 cursor-pointer right-4 top-1/2"
                             >
                               {showPassword ? (
-                                <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                                <Eye className="fill-gray-500 dark:fill-gray-400 size-5" />
                               ) : (
-                                <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                                <EyeOff className="fill-gray-500 dark:fill-gray-400 size-5" />
                               )}
                             </span>
                           </div>

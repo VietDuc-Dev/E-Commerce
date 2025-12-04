@@ -16,8 +16,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { useState } from "react";
-import { EyeIcon } from "lucide-react";
-import { EyeCloseIcon } from "@/icons";
+import { EyeIcon, EyeOff } from "lucide-react";
 
 export default function UserUpdatePasswordCard() {
   const [showPassword, setShowPassword] = useState(false);
@@ -147,7 +146,7 @@ export default function UserUpdatePasswordCard() {
                     {showPassword ? (
                       <EyeIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
                     ) : (
-                      <EyeCloseIcon className="fill-gray-500 dark:fill-gray-400 size-5" />
+                      <EyeOff className="fill-gray-500 dark:fill-gray-400 size-5" />
                     )}
                     <span className="ml-2">
                       {showPassword ? "Ẩn" : "Xem"} mật khẩu
