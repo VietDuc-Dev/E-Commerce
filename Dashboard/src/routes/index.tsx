@@ -9,7 +9,7 @@ import BaseLayout from "@/layout/BaseLayout";
 
 function AppRoutes() {
   return (
-    <BrowserRouter basename="/dashboard">
+    <BrowserRouter>
       <Routes>
         {/* <Route element={<BaseLayout />}>
           {baseRoutePaths.map((route) => (
