@@ -26,7 +26,7 @@ const ProductCard = ({ product }: { product: Product }) => {
             />
           </Link>
         )}
-        <ProductFavorite product={product} />
+        <ProductFavorite />
 
         {isNew && (
           <p className="absolute top-2 left-2 z-10 text-xs border border-shop_orange/50 px-2 rounded-full group-hover:border-lightGreen hover:text-shop_dark_green hoverEffect">
