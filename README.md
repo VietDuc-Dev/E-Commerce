@@ -8,32 +8,32 @@ Welcome to VietDuc E-Commerce, a modern and scalable online shopping platform bu
 
 ## 🌟 Key Features
 
-- 🔐 Authentication & Authorization (JWT,
+- 🔐 **Authentication & Authorization** (JWT,
   change password by email, Role-based: User / Admin)
 
-- 👤 User Profile Management (Update info, shipping addresses)
+- 👤 **User Profile Management** (Update info, shipping addresses)
 
-- 🛒 Shopping Cart (Add, remove, update quantity)
+- 🛒 **Shopping Cart** (Add, remove, update quantity)
 
-- 🧾 Checkout Flow (Order creation, payment, shipping)
+- 🧾 **Checkout Flow** (Order creation, payment, shipping)
 
-- 💳 Payment Integration (Stripe)
+- 💳 **Payment Integration** (Stripe)
 
-- 📦 Order Management (CRUD, status updates)
+- 📦 **Order Management** (CRUD, status updates)
 
-- 🏷️ Product Management (CRUD, categories, tags, filters)
+- 🏷️ **Product Management** (CRUD, categories, tags, filters)
 
-- 🖼️ Product Image Gallery (Multiple images, Cloudinary/local uploads)
+- 🖼️ **Product Image Gallery** (Multiple images, Cloudinary/local uploads)
 
-- 🔍 Advanced Search & Filters (Keyword, category, price range, AI assistant)
+- 🔍 **Advanced Search & Filters** (Keyword, category, price range, AI assistant)
 
-- ⭐ Product Reviews & Ratings
+- ⭐ **Product Reviews & Ratings**
 
-- 📊 Admin Dashboard
+- 📊 **Admin Dashboard**
 
-- 📈 Analytics (Revenue, top products, sales trends)
+- 📈 **Analytics** (Revenue, top products, sales trends)
 
-- 📅 Pagination & Sorting
+- 📅 **Pagination & Sorting**
 
 ---
 
@@ -67,7 +67,8 @@ This project leverages the latest tools and frameworks for modern development:
 
 ### 1. DEMO
 
-https://your-ecommerce-demo.vercel.app/
+- Client : https://e-commerce-wine-one-72.vercel.app/
+- Dashboard : https://e-commerce-dashboard-hazel.vercel.app/
 
 ### 2. Environment Variables
 
