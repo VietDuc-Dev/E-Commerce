@@ -50,7 +50,7 @@ export class OrderService {
 
     const tax = 0.1;
     // if total > 1tr => free ship
-    const shipping = total_price >= 1_000_000 ? 0 : 30_000;
+    const shipping = total_price >= 1_000 ? 0 : 30;
     total_price = Math.round(total_price + total_price * tax + shipping);
 
     const order = await OrderRepository.createOrder(

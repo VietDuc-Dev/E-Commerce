@@ -31,7 +31,7 @@ const CartPage = () => {
   );
 
   // if total > 1tr => free ship
-  const shipping = total >= 1000000 ? 0 : 30000;
+  const shipping = total >= 1000 ? 0 : 30;
 
   const totalCart = Math.round(total + total * 0.1 + shipping);
 
@@ -85,7 +85,9 @@ const CartPage = () => {
                               <p className="text-sm capitalize">
                                 Mô tả:{" "}
                                 <span className="font-semibold">
-                                  {product?.description}
+                                  <p className="truncate max-w-96">
+                                    {product?.description}
+                                  </p>
                                 </span>
                               </p>
                               <p className="text-sm capitalize">
