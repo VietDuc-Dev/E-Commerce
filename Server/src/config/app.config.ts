@@ -2,6 +2,7 @@ import { getEnv } from "../common/utils/get-env";
 
 const appConfig = () => ({
   PORT: getEnv("PORT", "5000"),
+  NODE_ENV: getEnv("NODE_ENV"),
   FRONTEND_URL: getEnv("FRONTEND_URL"),
   DASHBOARD_URL: getEnv("DASHBOARD_URL"),
   BASE_PATH: getEnv("BASE_PATH", "/api/v1"),
